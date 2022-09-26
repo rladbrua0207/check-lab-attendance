@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { globalTheme } from "../../GlobalTheme";
 
@@ -39,12 +40,31 @@ const StatusNavBox = styled.div`
   align-items: center;
 `;
 
+const page = {
+  calendar: "/",
+  statistic: "/statistic",
+  status: "/status",
+};
+
 function NavBar() {
+  const navigate = useNavigate();
+
+  const moveTargetPage = (arg) => {
+    navigate(page[arg]);
+  };
+
   return (
     <NavBarContainer>
-      <CalendarNavBox className="selectedNav">달력</CalendarNavBox>
-      <StatisticNavBox>통계</StatisticNavBox>
-      <StatusNavBox>현황</StatusNavBox>
+      <CalendarNavBox
+        className="selectedNav"
+        onClick={() => moveTargetPage("calendar")}
+      >
+        달력
+      </CalendarNavBox>
+      <StatisticNavBox onClick={() => moveTargetPage("statistic")}>
+        통계
+      </StatisticNavBox>
+      <StatusNavBox onClick={() => moveTargetPage("status")}>현황</StatusNavBox>
     </NavBarContainer>
   );
 }

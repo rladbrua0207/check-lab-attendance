@@ -5,6 +5,11 @@ import { isSameMonth, isSameDay, addDays, parse } from "date-fns";
 import styled from "styled-components";
 import circleImage from "../../images/circle.png";
 import { globalTheme } from "../../GlobalTheme";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 const CalendarContainer = styled.div`
   margin: 0 auto;
@@ -98,13 +103,15 @@ function Calendar() {
 const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
   return (
     <CalendarHeader>
-      <div onClick={prevMonth}>1</div>
+      <div onClick={prevMonth}>
+        <FontAwesomeIcon icon={faChevronLeft} />
+      </div>
       <SelectedMonth>
         {format(currentMonth, "yyyy")}년 {format(currentMonth, "M")}월
       </SelectedMonth>
-      {/* <Icon icon="bi:arrow-left-circle-fill" onClick={prevMonth} /> */}
-      {/* <Icon icon="bi:arrow-right-circle-fill" onClick={nextMonth} /> */}
-      <div onClick={nextMonth}>1</div>
+      <div onClick={nextMonth}>
+        <FontAwesomeIcon icon={faChevronRight} />
+      </div>
     </CalendarHeader>
   );
 };

@@ -1,13 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { globalTheme } from "../../GlobalTheme";
-import { format } from "date-fns";
-import { ko, zhCN } from "date-fns/locale";
 
 const TimeGaugeContainer = styled.div`
   position: relative;
   margin: 0 auto;
-  margin-top: 3vh;
+  margin-top: ${(props) => props.marginTop}vh;
   width: 75vw;
   height: 4vh;
   border: 1px solid ${globalTheme.blueColor};
@@ -28,15 +26,16 @@ const CurrentTimeGaugeText = styled.div`
   margin-left: 5vw;
 `;
 
-function TimeGauge() {
+function TimeGauge({ marginTop = 0 }) {
+  console.log(marginTop);
   const handleTimeFormat = (timeArg) => {
     const time = new Date(timeArg);
     console.log(new Date().getTime());
     return `${time.getHours()}h : ${time.getMinutes(0)}m (20%)`;
   };
   return (
-    <TimeGaugeContainer>
-      <CurrentTimeGauge width={20}>{/** Todo 동적으로*/}</CurrentTimeGauge>
+    <TimeGaugeContainer marginTop={marginTop}>
+      <CurrentTimeGauge width={30}>{/** Todo 동적으로*/}</CurrentTimeGauge>
       <CurrentTimeGaugeText>
         {handleTimeFormat(1663851112537 /** 시간받기*/)}
       </CurrentTimeGaugeText>
