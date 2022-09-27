@@ -3,7 +3,6 @@ import { format, addMonths, subMonths } from "date-fns";
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from "date-fns";
 import { isSameMonth, isSameDay, addDays, parse } from "date-fns";
 import styled from "styled-components";
-import circleImage from "../../images/circle.png";
 import { globalTheme } from "../../GlobalTheme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,7 +15,7 @@ const CalendarContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
-  height: 53vh;
+  height: 40%;
   padding: 2%;
 `;
 
@@ -49,7 +48,7 @@ const CalendarDaysBox = styled.div`
   &.disabled {
     visibility: hidden;
   }
-  width: 6%;
+  width: 7%;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -58,8 +57,6 @@ const CalendarDaysBox = styled.div`
 const CalendarDays = styled.div`
   margin-bottom: 1vh;
 `;
-
-const DailyAttendanceRateImg = styled.img``;
 
 const CalendarWeek = styled.div`
   display: flex;
@@ -71,7 +68,7 @@ const SelectedMonth = styled.div`
   font-size: 22px;
 `;
 
-function Calendar() {
+function StatusCalendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -172,9 +169,6 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
           >
             {formattedDate}
           </CalendarDays>
-          <DailyAttendanceRateImg src={circleImage}>
-            {/**Todo 동적으로 */}
-          </DailyAttendanceRateImg>
         </CalendarDaysBox>
       );
       day = addDays(day, 1);
@@ -185,4 +179,4 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
   return <div className="body">{rows}</div>;
 };
 
-export default Calendar;
+export default StatusCalendar;

@@ -51,8 +51,9 @@ const StatisticContent = styled.div`
   margin-top: 3vh;
   border: solid 1px ${globalTheme.blueColor};
   width: 95vw;
-  max-height: 70vh;
+  max-height: 66%;
   border-radius: 10px;
+  overflow: auto;
 `;
 
 const TimeGaugeBox = styled.div`
@@ -93,10 +94,12 @@ function StatisticPage() {
           <GaugeIndex>2</GaugeIndex>
           <TimeGauge></TimeGauge>
         </TimeGaugeBox>
+
         <TimeGaugeBox>
           <GaugeIndex>3</GaugeIndex>
           <TimeGauge></TimeGauge>
         </TimeGaugeBox>
+
         <TimeGaugeBox>
           <GaugeIndex>4</GaugeIndex>
           <TimeGauge></TimeGauge>
@@ -105,6 +108,7 @@ function StatisticPage() {
           <GaugeIndex>5</GaugeIndex>
           <TimeGauge></TimeGauge>
         </TimeGaugeBox>
+
         <TimeGaugeBox>
           <GaugeIndex>6</GaugeIndex>
           <TimeGauge></TimeGauge>

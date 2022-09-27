@@ -7,7 +7,8 @@ import StatisticPage from "./pages/StatisticPage";
 import StatusPage from "./pages/StatusPage";
 
 const MainContainer = styled.div`
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
 `;
 
 function App() {
