@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/header";
 import NavBar from "./components/navbar";
@@ -11,7 +11,7 @@ const MainContainer = styled.div`
   overflow: hidden;
 `;
 
-function App() {
+function Router() {
   return (
     <BrowserRouter>
       <MainContainer>
@@ -27,4 +27,4 @@ function App() {
   );
 }
 
-export default App;
+export default Router;

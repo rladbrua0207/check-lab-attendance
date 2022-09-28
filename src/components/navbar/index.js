@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { globalTheme } from "../../GlobalTheme";
@@ -47,24 +47,36 @@ const page = {
 };
 
 function NavBar() {
+  const [clickedNav, setClickedNav] = useState("calendar");
+
   const navigate = useNavigate();
 
   const moveTargetPage = (arg) => {
+    console.log(arg);
+    setClickedNav(arg);
     navigate(page[arg]);
   };
 
   return (
     <NavBarContainer>
       <CalendarNavBox
-        className="selectedNav"
+        className={clickedNav === "calendar" ? "selectedNav" : ""}
         onClick={() => moveTargetPage("calendar")}
       >
         달력
       </CalendarNavBox>
-      <StatisticNavBox onClick={() => moveTargetPage("statistic")}>
+      <StatisticNavBox
+        className={clickedNav === "statistic" ? "selectedNav" : ""}
+        onClick={() => moveTargetPage("statistic")}
+      >
         통계
       </StatisticNavBox>
-      <StatusNavBox onClick={() => moveTargetPage("status")}>현황</StatusNavBox>
+      <StatusNavBox
+        className={clickedNav === "status" ? "selectedNav" : ""}
+        onClick={() => moveTargetPage("status")}
+      >
+        현황
+      </StatusNavBox>
     </NavBarContainer>
   );
 }

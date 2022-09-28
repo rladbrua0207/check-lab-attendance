@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "./Router";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./GlobalStyle";
 import { globalTheme } from "./GlobalTheme";
+import Router from "./Router";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -11,7 +12,7 @@ ReactDOM.render(
     <ThemeProvider theme={globalTheme}>
       {/** 전역 스타일 적용을 위해 작성 */}
       <GlobalStyle />
-      <App />
+      <Router />
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
