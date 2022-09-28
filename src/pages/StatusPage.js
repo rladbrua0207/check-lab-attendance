@@ -5,7 +5,7 @@ import TimeGauge from "../components/timeGauge";
 import { globalTheme } from "../GlobalTheme";
 
 const StatusContainer = styled.div`
-  height: 100%;
+  height: 80%;
 `;
 
 const StatusContentContainer = styled.div`
@@ -14,7 +14,7 @@ const StatusContentContainer = styled.div`
   border-radius: 20px;
   width: 90vw;
   overflow: auto;
-  height: 35%;
+  height: 45%;
 `;
 
 const TimeGaugeBox = styled.div`

@@ -69,6 +69,18 @@ const GaugeIndex = styled.div`
   font-size: 1.3rem;
 `;
 
+const StatisticContentContainer = styled.div`
+  position: relative;
+  height: 73vh;
+`;
+
+const StatisticContentBox = styled.div`
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  transform: translate(-50%, 0);
+`;
+
 function StatisticPage() {
   return (
     <>
@@ -85,60 +97,63 @@ function StatisticPage() {
           </CheckAverageOutBox>
         </CheckAverageInOutContainer>
       </StatisticHeader>
-      <StatisticContent>
-        <TimeGaugeBox>
-          <GaugeIndex>1</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>2</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
+      <StatisticContentContainer>
+        <StatisticContentBox>
+          <StatisticContent>
+            <TimeGaugeBox>
+              <GaugeIndex>1</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
+            <TimeGaugeBox>
+              <GaugeIndex>2</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
+            <TimeGaugeBox>
+              <GaugeIndex>3</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
 
-        <TimeGaugeBox>
-          <GaugeIndex>3</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
+            <TimeGaugeBox>
+              <GaugeIndex>4</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
+            <TimeGaugeBox>
+              <GaugeIndex>5</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
 
-        <TimeGaugeBox>
-          <GaugeIndex>4</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>5</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-
-        <TimeGaugeBox>
-          <GaugeIndex>6</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>7</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>8</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>9</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>10</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>11</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>12</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-      </StatisticContent>
-      <StatisticFooter DateUnit={"year"} />
+            <TimeGaugeBox>
+              <GaugeIndex>6</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
+            <TimeGaugeBox>
+              <GaugeIndex>7</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
+            <TimeGaugeBox>
+              <GaugeIndex>8</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
+            <TimeGaugeBox>
+              <GaugeIndex>9</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
+            <TimeGaugeBox>
+              <GaugeIndex>10</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
+            <TimeGaugeBox>
+              <GaugeIndex>11</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
+            <TimeGaugeBox>
+              <GaugeIndex>12</GaugeIndex>
+              <TimeGauge></TimeGauge>
+            </TimeGaugeBox>
+          </StatisticContent>
+          <StatisticFooter DateUnit={"year"} />
+        </StatisticContentBox>
+      </StatisticContentContainer>
     </>
   );
 }

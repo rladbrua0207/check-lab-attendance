@@ -15,7 +15,7 @@ const CalendarContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
-  height: 40%;
+  height: 50%;
   padding: 2%;
 `;
 
