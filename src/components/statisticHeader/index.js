@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { globalTheme } from "../../GlobalTheme";
+import {globalTheme} from "../../GlobalTheme";
 
 const StatisticHeaderContainer = styled.div`
   height: 5vh;
@@ -40,20 +40,21 @@ const CheckAverageIn = styled.div``;
 const CheckAverageOut = styled.div``;
 
 function StatisticHeader() {
-  return (
-    <StatisticHeaderContainer>
-      <DateUnitMenu>year</DateUnitMenu>
-      <CheckAverageInOutContainer>
-        <CheckAverageInBox>
-          <CheckAverageIn>07 : 10</CheckAverageIn>
-          <div>avg in</div>
-        </CheckAverageInBox>
-        <CheckAverageOutBox>
-          <CheckAverageOut>17 : 50</CheckAverageOut>
-          <div>avg out</div>
-        </CheckAverageOutBox>
-      </CheckAverageInOutContainer>
-    </StatisticHeaderContainer>
-  );
+    return (
+        <StatisticHeaderContainer>
+            <DateUnitMenu>year</DateUnitMenu>
+            <CheckAverageInOutContainer>
+                <CheckAverageInBox>
+                    <CheckAverageIn>07 : 10</CheckAverageIn>
+                    <div>avg in</div>
+                </CheckAverageInBox>
+                <CheckAverageOutBox>
+                    <CheckAverageOut>17 : 50</CheckAverageOut>
+                    <div>avg out</div>
+                </CheckAverageOutBox>
+            </CheckAverageInOutContainer>
+        </StatisticHeaderContainer>
+    );
 }
+
 export default StatisticHeader;

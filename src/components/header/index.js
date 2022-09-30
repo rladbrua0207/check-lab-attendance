@@ -22,12 +22,12 @@ const Indicator = styled.div`
 `;
 
 function Header() {
-  return (
-    <HeaderContainer>
-      <HeaderTitle>출석체크</HeaderTitle>
-      <Indicator>{/** Todo 동적으로 색 바뀌도록 */}</Indicator>
-    </HeaderContainer>
-  );
+    return (
+        <HeaderContainer>
+            <HeaderTitle>출석체크</HeaderTitle>
+            <Indicator>{/** Todo 동적으로 색 바뀌도록 */}</Indicator>
+        </HeaderContainer>
+    );
 }
 
 export default Header;

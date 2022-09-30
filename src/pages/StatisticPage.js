@@ -16,7 +16,7 @@ const StatisticContents = styled.div`
   border: solid 1px ${globalTheme.blueColor};
   width: 95vw;
   max-height: 66%;
-  border-radius: 10px;
+  border-radius: 20px;
   overflow: auto;
 `;
 

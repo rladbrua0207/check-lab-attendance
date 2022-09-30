@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { globalTheme } from "../../GlobalTheme";
+import {globalTheme} from "../../GlobalTheme";
 
 const CheckButtonContainer = styled.div`
   margin-top: 4vh;
@@ -20,11 +20,11 @@ const CheckButtonBox = styled.div`
 `;
 
 function CheckButton() {
-  return (
-    <CheckButtonContainer>
-      <CheckButtonBox>출석하기</CheckButtonBox>
-    </CheckButtonContainer>
-  );
+    return (
+        <CheckButtonContainer>
+            <CheckButtonBox>출석하기</CheckButtonBox>
+        </CheckButtonContainer>
+    );
 }
 
 export default CheckButton;
