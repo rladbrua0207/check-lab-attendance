@@ -4,7 +4,7 @@ import {globalTheme} from "../../GlobalTheme";
 
 const CircleContainer = styled.svg`  
   display: block;
-  margin: 10px auto;
+  margin: 0 auto;
   max-width: 80%;
   max-height: 250px;
   
@@ -29,60 +29,16 @@ const Path = styled.path`
     0% {
       stroke-dasharray: 0 100;
     }
+    100%{
+      stroke-dasharray: 100 100;
+    }
   }
 `;
 
-// const CircleBox = styled.div`
-//   position: absolute;
-//   left: 50%;
-//   top: 50%;
-//   width: 10vw;
-//   height: 10vw;
-//   transform: translate(-50%, -50%);
-//
-//   .circle {
-//     position: relative;
-//     overflow: hidden;
-//     height: 50%;
-//     width: 50%;
-//   }
-//
-//   .circle:after {
-//     content: "";
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     width: 8vw;
-//     height: 8vw;
-//     box-sizing: border-box;
-//     border-radius: 50%;
-//     border:2px solid transparent;
-//   }
-// `;
-//
-// const CircleTop = styled.div`
-//   &:after {
-//     border-top-color: ${globalTheme.blueColor} !important;
-//     border-left-color: ${globalTheme.blueColor} !important;
-//   }
-//
-// `;
-//
-// const CircleBottom = styled.div`
-//   &:after {
-//     border-top-color: ${globalTheme.blueColor} !important;
-//     border-left-color: ${globalTheme.blueColor} !important;
-//   }
-// `;
-
-function Circle() {
+function Circle({progress}) {
     return (<CircleContainer viewBox={"0 0 36 36"}>
-        <Path stroke-dasharray={"60, 100"}
-              d={"M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"}></Path>
-        {/*<CircleBox>*/}
-        {/*    <CircleTop className={"circle"}></CircleTop>*/}
-        {/*    <CircleBottom className={"circle"}></CircleBottom>*/}
-        {/*</CircleBox>*/}
+        <Path stroke-dasharray={"60, 100"} progress={progress}
+              d={"M18 2.0845 a 15.9155 15.9155 1 0 0 0 31.831 a 15.9155 15.9155 1 0 0 0 -31.831"}></Path>
     </CircleContainer>);
 }
 

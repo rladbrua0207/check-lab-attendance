@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {format, addMonths, subMonths} from "date-fns";
 import {startOfMonth, endOfMonth, startOfWeek, endOfWeek} from "date-fns";
 import {isSameMonth, isSameDay, addDays, parse} from "date-fns";
@@ -11,6 +11,7 @@ import {
     faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import Circle from "../circle";
+import {axiosGet} from "../../api";
 
 const CalendarContainer = styled.div`
   margin: 0 auto;
@@ -50,6 +51,7 @@ const CalendarDaysHeader = styled.div`
 
 const CalendarDaysBox = styled.div`
   position: relative;
+
   &.disabled {
     visibility: hidden;
   }
@@ -77,6 +79,26 @@ const SelectedMonth = styled.div`
 function Calendar() {
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [workingHoursDayArray, setWorkingHoursDayArray] = useState([]);
+
+    const axiosGetWorkingHoursDay = async () => {
+        const monthStart = format(startOfMonth(currentMonth), "yyMMdd");
+        const monthEnd = format(endOfMonth(currentMonth), "yyMMdd");
+
+        console.log(monthStart);
+        console.log(monthEnd);
+
+        const sendData = {id: localStorage.getItem("id")}
+
+        const workingHoursDay = await axiosGet('workingHoursDayTermDate', sendData, monthStart, monthEnd);
+        setWorkingHoursDayArray(workingHoursDay);
+        return workingHoursDay;
+    };
+
+    useEffect(() => {
+        axiosGetWorkingHoursDay();
+    }, []);
+
 
     const prevMonth = () => {
         setCurrentMonth(subMonths(currentMonth, 1));
@@ -176,7 +198,7 @@ const RenderCells = ({currentMonth, selectedDate, onDateClick}) => {
                         {formattedDate}
                     </CalendarDays>
                     {/**Todo 동적으로 */}
-                    <Circle></Circle>
+                    <Circle progress={1}></Circle>
                 </CalendarDaysBox>
             );
             day = addDays(day, 1);
