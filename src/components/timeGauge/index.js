@@ -26,7 +26,7 @@ const CurrentTimeGaugeText = styled.div`
   margin-left: 5vw;
 `;
 
-function TimeGauge({ marginTop = 0 }) {
+function TimeGauge({ marginTop = 0, gaugePercent = 0}) {
   console.log(marginTop);
   const handleTimeFormat = (timeArg) => {
     const time = new Date(timeArg);
@@ -35,7 +35,7 @@ function TimeGauge({ marginTop = 0 }) {
   };
   return (
     <TimeGaugeContainer marginTop={marginTop}>
-      <CurrentTimeGauge width={30}>{/** Todo 동적으로*/}</CurrentTimeGauge>
+      <CurrentTimeGauge width={gaugePercent}></CurrentTimeGauge>
       <CurrentTimeGaugeText>
         {handleTimeFormat(1663851112537 /** 시간받기*/)}
       </CurrentTimeGaugeText>

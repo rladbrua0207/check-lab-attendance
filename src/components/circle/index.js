@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import {globalTheme} from "../../GlobalTheme";
 
-const CircleContainer = styled.svg`  
+const CircleContainer = styled.svg`
   display: block;
   margin: 0 auto;
   max-width: 80%;
   max-height: 250px;
-  
+
 
   //position: relative;
   //border: 5px solid;
@@ -29,8 +29,8 @@ const Path = styled.path`
     0% {
       stroke-dasharray: 0 100;
     }
-    100%{
-      stroke-dasharray: 100 100;
+    100% {
+      stroke-dasharray: ${(props) => props.progress} 100;
     }
   }
 `;

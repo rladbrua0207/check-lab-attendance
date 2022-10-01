@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import StatusCalendar from "../components/statusCcalendar";
+import StatusCalendar from "../components/statusCalendar";
 import TimeGauge from "../components/timeGauge";
 import { globalTheme } from "../GlobalTheme";
 
