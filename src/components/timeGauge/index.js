@@ -26,11 +26,9 @@ const CurrentTimeGaugeText = styled.div`
   margin-left: 5vw;
 `;
 
-function TimeGauge({ marginTop = 0, gaugePercent = 0}) {
-  console.log(marginTop);
+function TimeGauge({ marginTop = 0, gaugePercent = 0 }) {
   const handleTimeFormat = (timeArg) => {
     const time = new Date(timeArg);
-    console.log(new Date().getTime());
     return `${time.getHours()}h : ${time.getMinutes(0)}m (20%)`;
   };
   return (

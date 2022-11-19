@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {globalTheme} from "../../GlobalTheme";
+import { globalTheme } from "../../GlobalTheme";
 
 const NavBarContainer = styled.div`
   display: flex;
@@ -42,40 +42,56 @@ const StatusNavBox = styled.div`
 `;
 
 const page = {
-    calendar: "/", statistic: "/statistic", status: "/status",
+  calendar: "/",
+  statistic: "/statistic",
+  status: "/status",
 };
 
+// navigation bar로 다른 화면으로 navigate하기 위한 component
 function NavBar() {
-    const [clickedNav, setClickedNav] = useState("calendar");
+  const [clickedNav, setClickedNav] = useState();
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const moveTargetPage = (arg) => {
-        console.log(arg);
-        setClickedNav(arg);
-        navigate(page[arg]);
-    };
+  useEffect(() => {
+    setClickedNav(
+      location.pathname === "/"
+        ? "calendar"
+        : location.pathname === "/statistic"
+        ? "statistic"
+        : "status" // Todo url 추가 될 경우 수정
+    );
+  }, []);
 
-    return (<NavBarContainer>
-        <CalendarNavBox
-            className={clickedNav === "calendar" ? "selectedNav" : ""}
-            onClick={() => moveTargetPage("calendar")}
-        >
-            달력
-        </CalendarNavBox>
-        <StatisticNavBox
-            className={clickedNav === "statistic" ? "selectedNav" : ""}
-            onClick={() => moveTargetPage("statistic")}
-        >
-            통계
-        </StatisticNavBox>
-        <StatusNavBox
-            className={clickedNav === "status" ? "selectedNav" : ""}
-            onClick={() => moveTargetPage("status")}
-        >
-            현황
-        </StatusNavBox>
-    </NavBarContainer>);
+  const moveTargetPage = (arg) => {
+    console.log(arg);
+    setClickedNav(arg);
+    navigate(page[arg]);
+  };
+
+  return (
+    <NavBarContainer>
+      <CalendarNavBox
+        className={clickedNav === "calendar" ? "selectedNav" : ""}
+        onClick={() => moveTargetPage("calendar")}
+      >
+        달력
+      </CalendarNavBox>
+      <StatisticNavBox
+        className={clickedNav === "statistic" ? "selectedNav" : ""}
+        onClick={() => moveTargetPage("statistic")}
+      >
+        통계
+      </StatisticNavBox>
+      <StatusNavBox
+        className={clickedNav === "status" ? "selectedNav" : ""}
+        onClick={() => moveTargetPage("status")}
+      >
+        현황
+      </StatusNavBox>
+    </NavBarContainer>
+  );
 }
 
 export default NavBar;

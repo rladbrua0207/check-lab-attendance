@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {globalTheme} from "../../GlobalTheme";
-import {axiosGet, axiosPut} from "../../api";
+import { globalTheme } from "../../GlobalTheme";
+import { axiosGet, axiosPut } from "../../api";
+import { isLoginAtom } from "../../atom";
+import { useRecoilState } from "recoil";
 
 const LoginContainer = styled.div`
   width: 95vw;
@@ -36,32 +38,34 @@ const LoginButton = styled.div`
   margin-top: 3vh;
 `;
 
+// login component
 function Login() {
-    const [username, setUsername] = useState();
-    const [isLogin, setIsLogin] = useState(false);
+  const [username, setUsername] = useState();
+  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
 
-
-    useEffect(() => {
-        if (localStorage.getItem("id")) {
-            setIsLogin(true);
-        }
-    }, []);
-
-    const handleLogin = async () => {
-        const hData = await axiosGet("hashcode");
-        localStorage.setItem("id", hData.hashcode);
-        console.log(localStorage.getItem("id"));
-        const sendData = {id: localStorage.getItem("id"), name: username}
-        const uData = await axiosPut("user", sendData, null, null);
-        setIsLogin(true);
+  useEffect(() => {
+    if (localStorage.getItem("id")) {
+      setIsLogin(true);
     }
-    return (
-        (!isLogin ? <LoginContainer>
-            <LoginTitle>이름을 입력하시오.</LoginTitle>
-            <LoginInput onChange={(e) => setUsername(e.target.value)}></LoginInput>
-            <LoginButton onClick={handleLogin}>OK</LoginButton>
-        </LoginContainer> : <></>)
-    )
+  }, []);
+
+  const handleLogin = async () => {
+    const hData = await axiosGet("hashcode");
+    localStorage.setItem("id", hData.hashcode);
+    console.log(localStorage.getItem("id"));
+    const sendData = { id: localStorage.getItem("id"), name: username };
+    const uData = await axiosPut("user", sendData, null, null);
+    setIsLogin(true);
+  };
+  return !isLogin ? (
+    <LoginContainer>
+      <LoginTitle>이름을 입력하시오.</LoginTitle>
+      <LoginInput onChange={(e) => setUsername(e.target.value)}></LoginInput>
+      <LoginButton onClick={handleLogin}>OK</LoginButton>
+    </LoginContainer>
+  ) : (
+    <></>
+  );
 }
 
 export default Login;

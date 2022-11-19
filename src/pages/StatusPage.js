@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { axiosGet } from "../api";
+import { ststusSelectedDateAtom } from "../atom";
 import StatusCalendar from "../components/statusCalendar";
 import TimeGauge from "../components/timeGauge";
 import { globalTheme } from "../GlobalTheme";
@@ -31,11 +34,49 @@ const GaugeIndex = styled.div`
   font-size: 1.3rem;
 `;
 
+// 선택된 날짜의 유저들의 정보를 보기 위한 Status Page
 function StatusPage() {
+  const [selectedDate, setSelectedDate] = useRecoilState(
+    ststusSelectedDateAtom
+  );
+
+  const [groupWorkingHoursArr, setGroupWorkingHoursArr] = useState([
+    { name: "", workingHours: "", workingHoursPercent: "" },
+  ]);
+
+  // Todo 요청 title 바꾸기
+  const axiosGetGroupWorkingHours = async () => {
+    const sendData = { id: localStorage.getItem("id") };
+    const response = await axiosGet(
+      "", // Todo 요청 URL
+      sendData,
+      selectedDate
+    );
+
+    let groupWorkingHoursObjArr = [...response];
+
+    // Todo  response 받은 값 확인하면서 test
+
+    // groupWorkingHoursObjArr.forEach((element) => {
+    //   element.workingHoursPercent = ""; //  Todo 값 가져오면 percent값 주기
+    // });
+    // setSelectedDate(response);
+  };
+
+  useEffect(() => {
+    axiosGetGroupWorkingHours();
+  }, [selectedDate]);
+
   return (
     <StatusContainer>
       <StatusCalendar></StatusCalendar>
       <StatusContentContainer>
+        {groupWorkingHoursArr.map((val, index) => (
+          <TimeGaugeBox key={index}>
+            <GaugeIndex>{val.name}</GaugeIndex>
+            <TimeGauge gaugePercent={val.workingHours}></TimeGauge>
+          </TimeGaugeBox>
+        ))}
         <TimeGaugeBox>
           <GaugeIndex>adnan</GaugeIndex>
           <TimeGauge></TimeGauge>

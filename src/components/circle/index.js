@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import {globalTheme} from "../../GlobalTheme";
+import { globalTheme } from "../../GlobalTheme";
 
 const CircleContainer = styled.svg`
   display: block;
   margin: 0 auto;
   max-width: 80%;
   max-height: 250px;
-
 
   //position: relative;
   //border: 5px solid;
@@ -20,11 +19,12 @@ const CircleContainer = styled.svg`
 `;
 
 const Path = styled.path`
-  stroke: #4CC790;
+  stroke: #4cc790;
   fill: none;
   stroke-width: 2.8;
   stroke-linecap: round;
   animation: progress 1s ease-out forwards;
+
   @keyframes progress {
     0% {
       stroke-dasharray: 0 100;
@@ -35,11 +35,19 @@ const Path = styled.path`
   }
 `;
 
-function Circle({progress}) {
-    return (<CircleContainer viewBox={"0 0 36 36"}>
-        <Path stroke-dasharray={"60, 100"} progress={progress}
-              d={"M18 2.0845 a 15.9155 15.9155 1 0 0 0 31.831 a 15.9155 15.9155 1 0 0 0 -31.831"}></Path>
-    </CircleContainer>);
+// 사용자가 일을 한 만큼 date마다의 원을 채워주기 위한 component
+function Circle({ progress }) {
+  return (
+    <CircleContainer viewBox={"0 0 36 36"}>
+      <Path
+        stroke-dasharray={"60, 100"}
+        progress={progress}
+        d={
+          "M18 2.0845 a 15.9155 15.9155 1 0 0 0 31.831 a 15.9155 15.9155 1 0 0 0 -31.831"
+        }
+      ></Path>
+    </CircleContainer>
+  );
 }
 
 export default Circle;
