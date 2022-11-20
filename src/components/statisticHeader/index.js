@@ -59,14 +59,32 @@ const fadeOut = keyframes`
 `;
 const fadeIn = keyframes`
   0% {
-    width: 90%;
+    /* width: 90%; */
     color: black;
     opacity: 1;
   }
   100% {
-    width: 30%;
+    /* width: 30%; */
     color: white;
     opacity: 0;
+  }
+`;
+
+const weekFadeIn = keyframes`
+  0% {
+  }
+  50%{
+    transform: translateX(0vw);
+  }
+  100% {
+    transform: translateX(-35vw);
+  }
+`;
+const dayFadeIn = keyframes`
+  0% {
+  }
+  100% {
+    transform: translateX(-70vw);
   }
 `;
 
@@ -83,13 +101,23 @@ const DateUnitMenuBar = styled.div`
   z-index: 1;
   animation: ${({ isOpenMenuBar }) => (isOpenMenuBar ? fadeOut : fadeIn)} 1s
     ease-out forwards;
-  transition: visibility 2s ease-out;
+  transition: visibility 1s linear;
+
+  .week {
+    animation: ${({ isOpenMenuBar }) => (isOpenMenuBar ? fadeOut : weekFadeIn)}
+      1s linear forwards;
+  }
+  .day {
+    animation: ${({ isOpenMenuBar }) => (isOpenMenuBar ? fadeOut : dayFadeIn)}
+      1s linear forwards;
+  }
 `;
 
 const MenuBarItem = styled.div`
   display: flex;
   height: 100%;
-  width: 30%;
+  max-width: 30%;
+  min-width: 30%;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -118,14 +146,20 @@ function StatisticHeader() {
     <StatisticHeaderContainer>
       <DateUnitMenu onClick={openDateMenu}>{selectedDateMenu}</DateUnitMenu>
       <DateUnitMenuBar isOpenMenuBar={isOpenMenuBar}>
-        <MenuBarItem onClick={() => changeSelectedMenu("year")}>
-          year
-        </MenuBarItem>
-        <MenuBarItem onClick={() => changeSelectedMenu("month")}>
+        <MenuBarItem
+          className="month"
+          onClick={() => changeSelectedMenu("month")}
+        >
           month
         </MenuBarItem>
-        <MenuBarItem onClick={() => changeSelectedMenu("week")}>
+        <MenuBarItem
+          className="week"
+          onClick={() => changeSelectedMenu("week")}
+        >
           week
+        </MenuBarItem>
+        <MenuBarItem className="day" onClick={() => changeSelectedMenu("day")}>
+          day
         </MenuBarItem>
       </DateUnitMenuBar>
 

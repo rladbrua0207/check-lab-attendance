@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { globalTheme } from "../../GlobalTheme";
 
@@ -32,6 +32,7 @@ const StatisticNavBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const StatusNavBox = styled.div`
   margin: 1px;
   width: 33%;
@@ -62,7 +63,7 @@ function NavBar() {
         ? "statistic"
         : "status" // Todo url 추가 될 경우 수정
     );
-  }, []);
+  }, [location.pathname]);
 
   const moveTargetPage = (arg) => {
     console.log(arg);

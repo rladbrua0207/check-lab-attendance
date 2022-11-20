@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -41,22 +42,34 @@ function StatusPage() {
   );
 
   const [groupWorkingHoursArr, setGroupWorkingHoursArr] = useState([
-    { name: "", workingHours: "", workingHoursPercent: "" },
+    { name: "", workingHours: "" },
   ]);
 
   // Todo 요청 title 바꾸기
   const axiosGetGroupWorkingHours = async () => {
-    const sendData = { id: localStorage.getItem("id") };
+    const sendData = {
+      id: "be46d857f768cb0b496f1ca83bd3bebce877e7336580db09c3478b98d2c95ee9", // 고정 hashcode
+    };
     const response = await axiosGet(
-      "", // Todo 요청 URL
+      "workingHoursDayDate", // Todo 요청 URL
       sendData,
-      selectedDate
+      format(selectedDate, "yyMMdd")
     );
+    console.log(response);
 
-    let groupWorkingHoursObjArr = [...response];
+    const objArr = [];
+    const keys = Object.keys(response.hours);
+    for (let i = 0; i < keys.length; i++) {
+      const obj = {
+        name: keys[i],
+        workingHours: response.hours[keys[i]],
+      };
+      objArr.push(obj);
+    }
 
-    // Todo  response 받은 값 확인하면서 test
-
+    setGroupWorkingHoursArr(objArr);
+    // let groupWorkingHoursObjArr = [...response];
+    // // Todo  response 받은 값 확인하면서 test
     // groupWorkingHoursObjArr.forEach((element) => {
     //   element.workingHoursPercent = ""; //  Todo 값 가져오면 percent값 주기
     // });
@@ -74,29 +87,9 @@ function StatusPage() {
         {groupWorkingHoursArr.map((val, index) => (
           <TimeGaugeBox key={index}>
             <GaugeIndex>{val.name}</GaugeIndex>
-            <TimeGauge gaugePercent={val.workingHours}></TimeGauge>
+            <TimeGauge dayTime={val.workingHours}></TimeGauge>
           </TimeGaugeBox>
         ))}
-        <TimeGaugeBox>
-          <GaugeIndex>adnan</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>yugyeom</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>kwanghee</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>jaeheon</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
-        <TimeGaugeBox>
-          <GaugeIndex>dasom</GaugeIndex>
-          <TimeGauge></TimeGauge>
-        </TimeGaugeBox>
       </StatusContentContainer>
     </StatusContainer>
   );

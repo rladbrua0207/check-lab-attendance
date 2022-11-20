@@ -52,7 +52,10 @@ const CalendarDaysBox = styled.div`
   &.disabled {
     visibility: hidden;
   }
-
+  &.selected div {
+    background-color: lightgray;
+    border-radius: 1000px;
+  }
   width: 7%;
   text-align: center;
   display: flex;
@@ -78,7 +81,7 @@ function StatusCalendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useRecoilState(
     ststusSelectedDateAtom
-  );
+  ); // Todo default selectedDate 오늘날짜로, selected Date UI에 표시
 
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
@@ -160,7 +163,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
           className={`${
             !isSameMonth(day, monthStart)
               ? "disabled"
-              : isSameDay(day, parseISO(selectedDate))
+              : isSameDay(day, selectedDate)
               ? "selected"
               : format(currentMonth, "MM") !== format(new Date(day), "MM")
               ? "not-valid"
@@ -168,13 +171,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
           }`}
           key={day}
           onClick={
-            // () => onDateClick(parse(cloneDay.toString(), "dd", new Date()))
-            () => onDateClick(format(cloneDay, "yyMMdd"))
-
-            // parse(cloneDay, "dd", new Date()))
-            // `${cloneDay.getFullYear().toString().substring(2)}${
-            //   cloneDay.getMonth() + 1
-            // }${cloneDay.getDate()}`
+            () => onDateClick(cloneDay)
           }
         >
           <CalendarDays

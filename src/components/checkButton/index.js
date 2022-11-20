@@ -27,15 +27,10 @@ function CheckButton() {
 
   const axiosGetIsCurrentCheck = async () => {
     const sendData = { id: localStorage.getItem("id") };
-    const responseData = await axiosGet(
-      "status",
-      "a2ff08fef3bd9249ae2d12038daf93620cb3da0673c355d8783ede8d6ed87f37"
-    );
+    const responseData = await axiosGet("status", sendData);
     console.log(responseData);
 
-    if (responseData !== "error") {
-      responseData === "q" ? setIsChecked(false) : setIsChecked(true);
-    }
+    responseData.status === "q" ? setIsChecked(false) : setIsChecked(true);
   };
 
   useEffect(() => {
@@ -47,15 +42,11 @@ function CheckButton() {
     const sendData = { id: localStorage.getItem("id") };
 
     if (isChecked) {
-      responseData = await axiosPost(
-        "checkout",
-        "a2ff08fef3bd9249ae2d12038daf93620cb3da0673c355d8783ede8d6ed87f37"
-      );
+      responseData = await axiosPost("checkout", sendData);
+      if (responseData.errcode === 0) setIsChecked(false);
     } else {
-      responseData = await axiosPost(
-        "checkin",
-        "a2ff08fef3bd9249ae2d12038daf93620cb3da0673c355d8783ede8d6ed87f37"
-      );
+      responseData = await axiosPost("checkin", sendData);
+      if (responseData.errcode === 0) setIsChecked(true);
     }
 
     console.log(responseData);

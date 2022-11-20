@@ -6,23 +6,19 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   addMonths,
-  addWeeks,
   addYears,
   format,
   getMonth,
-  getWeek,
   subMonths,
-  subWeeks,
   subYears,
 } from "date-fns";
-import getWeekOfMonth from "date-fns/getWeekOfMonth";
 import React from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import {
-  statisticCurrentMonthAtom,
-  statisticCurrentWeekAtom,
-  statisticCurrentYearAtom,
+  statisticCurrentMonthOfDayAtom,
+  statisticCurrentMonthOfWeekAtom,
+  statisticCurrentYearOfMonthAtom,
 } from "../../atom";
 
 const StatisticFooterContainer = styled.div`
@@ -44,16 +40,15 @@ function StatisticFooter({ dateUnit }) {
   );
 }
 
-const StatisticYearFooter = () => {
-  const [statisticCurrentYear, setStatisticCurrentYear] = useRecoilState(
-    statisticCurrentYearAtom
-  );
+const StatisticYearOfMonthFooter = () => {
+  const [statisticCurrentYearOfMonth, setStatisticCurrentYearOfMonth] =
+    useRecoilState(statisticCurrentYearOfMonthAtom);
 
   const prevYear = () => {
-    setStatisticCurrentYear(subYears(statisticCurrentYear, 1));
+    setStatisticCurrentYearOfMonth(subYears(statisticCurrentYearOfMonth, 1));
   };
   const nextYear = () => {
-    setStatisticCurrentYear(addYears(statisticCurrentYear, 1));
+    setStatisticCurrentYearOfMonth(addYears(statisticCurrentYearOfMonth, 1));
   };
 
   return (
@@ -61,7 +56,9 @@ const StatisticYearFooter = () => {
       <div onClick={prevYear}>
         <FontAwesomeIcon icon={faChevronLeft} />
       </div>
-      <SelectedDate>{format(statisticCurrentYear, "yyyy")}년</SelectedDate>
+      <SelectedDate>
+        {format(statisticCurrentYearOfMonth, "yyyy")}년
+      </SelectedDate>
       <div onClick={nextYear}>
         <FontAwesomeIcon icon={faChevronRight} />
       </div>
@@ -69,16 +66,15 @@ const StatisticYearFooter = () => {
   );
 };
 
-const StatisticMonthFooter = () => {
-  const [statisticCurrentMonth, setStatisticCurrentMonth] = useRecoilState(
-    statisticCurrentMonthAtom
-  );
+const StatisticMonthOfWeekFooter = () => {
+  const [statisticCurrentMonthOfWeek, setStatisticCurrentMonthOfWeek] =
+    useRecoilState(statisticCurrentMonthOfWeekAtom);
 
   const prevMonth = () => {
-    setStatisticCurrentMonth(subMonths(statisticCurrentMonth, 1));
+    setStatisticCurrentMonthOfWeek(subMonths(statisticCurrentMonthOfWeek, 1));
   };
   const nextMonth = () => {
-    setStatisticCurrentMonth(addMonths(statisticCurrentMonth, 1));
+    setStatisticCurrentMonthOfWeek(addMonths(statisticCurrentMonthOfWeek, 1));
   };
 
   return (
@@ -86,7 +82,13 @@ const StatisticMonthFooter = () => {
       <div onClick={prevMonth}>
         <FontAwesomeIcon icon={faChevronLeft} />
       </div>
-      <SelectedDate>{format(statisticCurrentMonth, "MM")}월</SelectedDate>
+      <SelectedDate>
+        {`${format(statisticCurrentMonthOfWeek, "yyyy")}년 ${format(
+          statisticCurrentMonthOfWeek,
+          "MM"
+        )}`}
+        월
+      </SelectedDate>
       <div onClick={nextMonth}>
         <FontAwesomeIcon icon={faChevronRight} />
       </div>
@@ -94,16 +96,15 @@ const StatisticMonthFooter = () => {
   );
 };
 
-const StatisticWeekFooter = () => {
-  const [statisticCurrentWeek, setStatisticCurrentWeek] = useRecoilState(
-    statisticCurrentWeekAtom
-  );
+const StatisticMonthOfDayFooter = () => {
+  const [statisticCurrentMonthOfDay, setStatisticCurrentMonthOfDay] =
+    useRecoilState(statisticCurrentMonthOfDayAtom);
 
   const prevWeek = () => {
-    setStatisticCurrentWeek(subWeeks(statisticCurrentWeek, 1));
+    setStatisticCurrentMonthOfDay(subMonths(statisticCurrentMonthOfDay, 1));
   };
   const nextWeek = () => {
-    setStatisticCurrentWeek(addWeeks(statisticCurrentWeek, 1));
+    setStatisticCurrentMonthOfDay(addMonths(statisticCurrentMonthOfDay, 1));
   };
   return (
     <>
@@ -111,11 +112,9 @@ const StatisticWeekFooter = () => {
         <FontAwesomeIcon icon={faChevronLeft} />
       </div>
       <SelectedDate>
-        {getMonth(statisticCurrentWeek) +
-          1 +
-          "월 " +
-          getWeekOfMonth(statisticCurrentWeek)}
-        주차
+        {`${format(statisticCurrentMonthOfDay, "yyyy")}년 ${
+          getMonth(statisticCurrentMonthOfDay) + 1
+        }월`}
       </SelectedDate>
       <div onClick={nextWeek}>
         <FontAwesomeIcon icon={faChevronRight} />
@@ -125,9 +124,9 @@ const StatisticWeekFooter = () => {
 };
 
 const footer = {
-  year: StatisticYearFooter,
-  month: StatisticMonthFooter,
-  week: StatisticWeekFooter,
+  month: StatisticYearOfMonthFooter,
+  week: StatisticMonthOfWeekFooter,
+  day: StatisticMonthOfDayFooter,
 };
 
 export default StatisticFooter;

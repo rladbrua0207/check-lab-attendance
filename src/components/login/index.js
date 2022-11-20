@@ -15,6 +15,7 @@ const LoginContainer = styled.div`
   left: 50%;
   transform: translate(-50%, 0);
   background-color: white;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,6 +47,8 @@ function Login() {
   useEffect(() => {
     if (localStorage.getItem("id")) {
       setIsLogin(true);
+    } else {
+      setIsLogin(false);
     }
   }, []);
 

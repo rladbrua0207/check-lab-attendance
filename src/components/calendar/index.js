@@ -12,7 +12,10 @@ import {
 import Circle from "../circle";
 import { axiosGet } from "../../api";
 import { useRecoilState } from "recoil";
-import { selectedCalendarDateAtom } from "../../atom";
+import {
+  calendarSelectedDateAtom,
+  monthOfDayWorkingHoursAtom,
+} from "../../atom";
 
 const CalendarContainer = styled.div`
   margin: 0 auto;
@@ -57,6 +60,11 @@ const CalendarDaysBox = styled.div`
     visibility: hidden;
   }
 
+  &.selected div {
+    background-color: lightgray;
+    border-radius: 1000px;
+  }
+
   width: 6%;
   text-align: center;
   display: flex;
@@ -81,23 +89,32 @@ const SelectedMonth = styled.div`
 function Calendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useRecoilState(
-    selectedCalendarDateAtom
+    calendarSelectedDateAtom
   );
-  const [workingHoursDayArray, setWorkingHoursDayArray] = useState([]);
+  const [monthOfDayWorkingHoursArr, setMonthOfDayWorkingHoursArr] =
+    useRecoilState(monthOfDayWorkingHoursAtom);
 
   const axiosGetWorkingHoursDayTermDate = async () => {
-    const monthStart = format(startOfMonth(currentMonth), "yyMMdd");
-    const monthEnd = format(endOfMonth(currentMonth), "yyMMdd");
+    const monthStartDate = format(startOfMonth(currentMonth), "yyMMdd");
+    const monthEndDate = format(endOfMonth(currentMonth), "yyMMdd");
 
     const sendData = { id: localStorage.getItem("id") };
+    console.log(monthStartDate);
+    console.log(monthEndDate);
 
-    setWorkingHoursDayArray(
-      await axiosGet("workingHoursDayTermDate", sendData, monthStart, monthEnd)
+    const response = await axiosGet(
+      "workingHoursDayTermDate",
+      sendData,
+      monthStartDate,
+      monthEndDate
     );
+    console.log(response);
+    setMonthOfDayWorkingHoursArr(response.hours);
   };
 
   useEffect(() => {
     axiosGetWorkingHoursDayTermDate();
+    console.log(monthOfDayWorkingHoursArr);
   }, [currentMonth]);
 
   const prevMonth = () => {
@@ -122,7 +139,7 @@ function Calendar() {
         currentMonth={currentMonth}
         selectedDate={selectedDate}
         onDateClick={onDateClick}
-        workingHoursDayArray={workingHoursDayArray}
+        monthOfDayWorkingHoursArr={monthOfDayWorkingHoursArr}
       />
     </CalendarContainer>
   );
@@ -165,7 +182,7 @@ const RenderCells = ({
   currentMonth,
   selectedDate,
   onDateClick,
-  workingHoursDayArray,
+  monthOfDayWorkingHoursArr,
 }) => {
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
@@ -181,19 +198,25 @@ const RenderCells = ({
     for (let i = 0; i < 7; i++) {
       formattedDate = format(day, "d");
       const cloneDay = day;
+      console.log(format(day, "d"));
+      // console.log(
+      //   monthOfDayWorkingHoursArr !== undefined
+      //     ? (monthOfDayWorkingHoursArr[Number(formattedDate - 1)] / 8) * 100
+      //     : 0
+      // );
       days.push(
         <CalendarDaysBox
           className={`${
             !isSameMonth(day, monthStart)
               ? "disabled"
-              : isSameDay(day, parseISO(selectedDate))
+              : isSameDay(day, selectedDate)
               ? "selected"
               : format(currentMonth, "MM") !== format(new Date(day), "MM")
               ? "not-valid"
-              : "valid"
+              : `valid${format(day, "d")}`
           }`}
           key={day}
-          onClick={() => onDateClick(format(cloneDay, "dd"))}
+          onClick={() => onDateClick(cloneDay)}
         >
           <CalendarDays
             className={
@@ -208,9 +231,10 @@ const RenderCells = ({
           <Circle
             progress={
               isSameMonth(day, currentMonth)
-                ? workingHoursDayArray[day]
-                  ? 50
-                  : 30 /* Todo 나누기 몇? */
+                ? monthOfDayWorkingHoursArr !== undefined
+                  ? (monthOfDayWorkingHoursArr[Number(formattedDate - 1)] / 8) *
+                    100
+                  : 0
                 : 0
             }
           ></Circle>

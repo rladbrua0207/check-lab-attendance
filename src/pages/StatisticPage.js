@@ -1,12 +1,12 @@
-import { format } from "date-fns";
+import { format, getWeek, weeksToDays } from "date-fns";
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { axiosGet } from "../api";
 import {
-  statisticCurrentMonthAtom,
-  statisticCurrentWeekAtom,
-  statisticCurrentYearAtom,
+  statisticCurrentMonthOfDayAtom,
+  statisticCurrentMonthOfWeekAtom,
+  statisticCurrentYearOfMonthAtom,
   statisticSelectedDateMenuAtom,
 } from "../atom";
 import StatisticFooter from "../components/statisticFooter";
@@ -19,7 +19,7 @@ const StatisticContents = styled.div`
   margin-top: 3vh;
   border: solid 1px ${globalTheme.blueColor};
   width: 95vw;
-  max-height: 66%;
+  max-height: 65vh;
   border-radius: 20px;
   overflow: auto;
 `;
@@ -43,6 +43,9 @@ const StatisticContentsContainer = styled.div`
 `;
 
 const StatisticContentsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   position: absolute;
   bottom: 0%;
   left: 50%;
@@ -52,73 +55,77 @@ const StatisticContentsBox = styled.div`
 // 유저 본인의 선택된 옵션의 업무 달성률을 보여주는 Statistic Page
 function StatisticPage() {
   const selectedDateMenu = useRecoilValue(statisticSelectedDateMenuAtom);
-  const [statisticCurrentYear, setStatisticCurrentYear] = useRecoilState(
-    statisticCurrentYearAtom
-  );
-  const [statisticCurrentMonth, setStatisticCurrentMonth] = useRecoilState(
-    statisticCurrentMonthAtom
-  );
-  const [statisticCurrentWeek, setStatisticCurrentWeek] = useRecoilState(
-    statisticCurrentWeekAtom
-  );
+  const [statisticCurrentYearOfMonth, setStatisticCurrentYearOfMonth] =
+    useRecoilState(statisticCurrentYearOfMonthAtom);
+  const [statisticCurrentMonthOfWeek, setStatisticCurrentMonthOfWeek] =
+    useRecoilState(statisticCurrentMonthOfWeekAtom);
+  const [statisticCurrentMonthOfDay, setStatisticCurrentMonthOfDay] =
+    useRecoilState(statisticCurrentMonthOfDayAtom);
 
-  const [workingHoursArr, setWorkingHoursArr] = useState([1, 2]);
+  const [workingHoursArr, setWorkingHoursArr] = useState([]);
 
   const axiosGetWorkingHours = async () => {
     const sendData = { id: localStorage.getItem("id") };
 
     const startDate =
-      selectedDateMenu === "year"
-        ? format(statisticCurrentYear, "yy") + "01"
-        : "month"
-        ? format(statisticCurrentYear, "yy") +
-          format(statisticCurrentMonth, "mm") +
+      selectedDateMenu === "month"
+        ? format(statisticCurrentYearOfMonth, "yy") + "01"
+        : selectedDateMenu === "week"
+        ? format(statisticCurrentMonthOfWeek, "yy") +
+          format(statisticCurrentMonthOfWeek, "MM") +
           "01"
-        : format(statisticCurrentYear, "yy") +
-          format(statisticCurrentMonth, "mm") +
+        : format(statisticCurrentMonthOfDay, "yy") +
+          format(statisticCurrentMonthOfDay, "MM") +
           "01";
 
     const endDate =
-      selectedDateMenu === "year"
-        ? format(statisticCurrentYear, "yy") + "01"
-        : "month"
-        ? format(statisticCurrentYear, "yy") +
-          format(statisticCurrentMonth, "mm") +
+      selectedDateMenu === "month"
+        ? format(statisticCurrentYearOfMonth, "yy") + "12"
+        : selectedDateMenu === "week"
+        ? format(statisticCurrentMonthOfWeek, "yy") +
+          format(statisticCurrentMonthOfWeek, "MM") +
           "31"
-        : format(statisticCurrentYear, "yy") +
-          format(statisticCurrentMonth, "mm") +
+        : format(statisticCurrentMonthOfDay, "yy") +
+          format(statisticCurrentMonthOfDay, "MM") +
           "31";
 
     // workingHoursYear도 필요함.
-    const workingHours = await axiosGet(
-      selectedDateMenu === "year"
+    const response = await axiosGet(
+      selectedDateMenu === "month"
         ? "workingHoursMonthTermDate"
-        : selectedDateMenu === "month"
+        : selectedDateMenu === "week"
         ? "workingHoursWeekTermDate"
         : "workingHoursDayTermDate",
       sendData,
       startDate,
       endDate
     );
-
-    setWorkingHoursArr(workingHours);
+    setWorkingHoursArr(response.hours);
+    console.log(response.hours);
   };
-  const todos = [10, 20, 30, 45, 50, 100, 21, 43, 12, 30, 90, 60];
 
   useEffect(() => {
     axiosGetWorkingHours();
-  }, [statisticCurrentYear, statisticCurrentMonth, statisticCurrentWeek]);
-
+  }, [
+    statisticCurrentYearOfMonth,
+    statisticCurrentMonthOfWeek,
+    statisticCurrentMonthOfDay,
+    selectedDateMenu,
+  ]);
   return (
     <>
       <StatisticHeader />
       <StatisticContentsContainer>
         <StatisticContentsBox>
           <StatisticContents>
-            {todos.map((val, index) => (
+            {workingHoursArr.map((val, index) => (
               <TimeGaugeBox key={index}>
                 <GaugeIndex>{index + 1}</GaugeIndex>
-                <TimeGauge gaugePercent={val}></TimeGauge>
+                <TimeGauge
+                  monthTime={selectedDateMenu === "month" ? val : -1}
+                  weekTime={selectedDateMenu === "week" ? val : -1}
+                  dayTime={selectedDateMenu === "day" ? val : -1}
+                ></TimeGauge>
               </TimeGaugeBox>
             ))}
           </StatisticContents>

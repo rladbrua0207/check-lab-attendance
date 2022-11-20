@@ -35,7 +35,7 @@ export const axiosGet = async (urlName, sendData, param1, param2) => {
   try {
     const response = await axios.get(
       `${baseUrl}${subUrl(urlName, param1, param2)}`,
-      { sendData },
+      { params: sendData },
       {
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,9 @@ export const axiosGet = async (urlName, sendData, param1, param2) => {
     console.log(response);
     return response.data;
   } catch (err) {
-    console.log(`get error : ${err}`);
+    console.log(
+      `get error \nerror code: ${err.response.data.errcode}, error message: ${err.response.data.err}`
+    );
     return "error";
   }
 };
@@ -55,7 +57,7 @@ export const axiosPost = async (urlName, sendData, param1, param2) => {
   try {
     const response = await axios.post(
       `${baseUrl}${subUrl(urlName, param1, param2)}`,
-      { sendData },
+      sendData,
       {
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +68,9 @@ export const axiosPost = async (urlName, sendData, param1, param2) => {
     console.log(response);
     return response.data;
   } catch (err) {
-    console.log(`post error : ${err}`);
+    console.log(
+      `post err \nerror code: ${err.response.data.errcode}, error message: ${err.response.data.err}`
+    );
     return "error";
   }
 };
@@ -86,7 +90,9 @@ export const axiosPut = async (urlName, sendData, param1, param2) => {
     console.log(response);
     return response.data;
   } catch (err) {
-    console.log(`put error : ${err}`);
+    console.log(
+      `put error \nerror code: ${err.response.data.errcode}, error message: ${err.response.data.err}`
+    );
     return "error";
   }
 };
@@ -105,7 +111,9 @@ export const axiosPatch = async (urlName, sendData, param1, param2) => {
     console.log(response);
     return response.data;
   } catch (err) {
-    console.log(`patch error : ${err}`);
+    console.log(
+      `patch err \nerror code: ${err.response.data.errcode}, error message: ${err.response.data.err}`
+    );
     return "error";
   }
 };

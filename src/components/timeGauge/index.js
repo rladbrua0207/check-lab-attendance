@@ -18,7 +18,8 @@ const TimeGaugeContainer = styled.div`
 const CurrentTimeGauge = styled.div`
   height: 100%;
   width: ${(props) => props.width}%;
-  background-color: ${globalTheme.blueColor};
+  background-color: ${(props) =>
+    props.width >= 100 ? "#87D5AA" : `${globalTheme.blueColor}`};
 `;
 
 const CurrentTimeGaugeText = styled.div`
@@ -26,16 +27,83 @@ const CurrentTimeGaugeText = styled.div`
   margin-left: 5vw;
 `;
 
-function TimeGauge({ marginTop = 0, gaugePercent = 0 }) {
-  const handleTimeFormat = (timeArg) => {
-    const time = new Date(timeArg);
-    return `${time.getHours()}h : ${time.getMinutes(0)}m (20%)`;
+const monthWorkingHoursToPercent = (time) => {
+  return Math.floor((Number(time) / (22 * 8)) * 100);
+};
+const weekWorkingHoursToPercent = (time) => {
+  return Math.floor((Number(time) / (5 * 8)) * 100);
+};
+const dayWorkingHoursToPercent = (time) => {
+  return Math.floor((Number(time) / 8) * 100);
+};
+
+function TimeGauge({
+  marginTop = 0,
+  dayTime = -1,
+  weekTime = -1,
+  monthTime = -1,
+}) {
+  const handleDayTimeFormat = (time) => {
+    const splitTime = time.split(".");
+    if (splitTime[1] !== undefined) {
+      return `${Number(splitTime[0]).toString().padStart(2, "0")}h ${Math.floor(
+        Number("0." + splitTime[1]) * 60
+      )
+        .toString()
+        .padStart(2, "0")}m (${dayWorkingHoursToPercent(time)}%)`;
+    } else {
+      return `${Number(splitTime[0])
+        .toString()
+        .padStart(2, "0")}h 00m (${dayWorkingHoursToPercent(time)}%)`;
+    }
   };
+  const handleMonthTimeFormat = (time) => {
+    const splitTime = time.split(".");
+    if (splitTime[1] !== undefined) {
+      return `${Number(splitTime[0]).toString().padStart(3, "0")}h ${Math.floor(
+        Number("0." + splitTime[1]) * 60
+      )
+        .toString()
+        .padStart(2, "0")}m (${monthWorkingHoursToPercent(time)}%)`;
+    } else {
+      return `${Number(splitTime[0])
+        .toString()
+        .padStart(3, "0")}h 00m (${monthWorkingHoursToPercent(time)}%)`;
+    }
+  };
+
+  const handleWeekTimeFormat = (time) => {
+    const splitTime = time.split(".");
+    if (splitTime[1] !== undefined) {
+      return `${Number(splitTime[0]).toString().padStart(2, "0")}h ${Math.floor(
+        Number("0." + splitTime[1]) * 60
+      )
+        .toString()
+        .padStart(2, "0")}m (${weekWorkingHoursToPercent(time)}%)`;
+    } else {
+      return `${Number(splitTime[0])
+        .toString()
+        .padStart(2, "0")}h 00m (${weekWorkingHoursToPercent(time)}%)`;
+    }
+  };
+
   return (
     <TimeGaugeContainer marginTop={marginTop}>
-      <CurrentTimeGauge width={gaugePercent}></CurrentTimeGauge>
+      <CurrentTimeGauge
+        width={
+          dayTime !== -1
+            ? dayWorkingHoursToPercent(dayTime)
+            : weekTime !== -1
+            ? weekWorkingHoursToPercent(weekTime)
+            : monthWorkingHoursToPercent(monthTime)
+        }
+      ></CurrentTimeGauge>
       <CurrentTimeGaugeText>
-        {handleTimeFormat(1663851112537 /** 시간받기*/)}
+        {dayTime !== -1
+          ? handleDayTimeFormat(dayTime.toString() /** 시간받기*/)
+          : weekTime !== -1
+          ? handleWeekTimeFormat(weekTime.toString())
+          : handleMonthTimeFormat(monthTime.toString())}
       </CurrentTimeGaugeText>
     </TimeGaugeContainer>
   );

@@ -1,9 +1,8 @@
 import { atom } from "recoil";
-import { format } from "date-fns";
 
-export const selectedCalendarDateAtom = atom({
-  key: "selectedCalendarDate",
-  default: format(new Date(), "yyMMdd"),
+export const calendarSelectedDateAtom = atom({
+  key: "calendarSelectedDate",
+  default: new Date(),
 });
 
 export const userLocationAtom = atom({
@@ -18,25 +17,33 @@ export const isLoginAtom = atom({
 
 export const statisticSelectedDateMenuAtom = atom({
   key: "statisticSelectedDateMenu",
-  default: "year",
+  default: "month",
 });
 
-export const statisticCurrentYearAtom = atom({
-  key: "statisticCurrentYear",
+export const statisticCurrentYearOfMonthAtom = atom({
+  key: "statisticCurrentYearOfMonth",
   default: new Date(),
 });
 
-export const statisticCurrentMonthAtom = atom({
-  key: "statisticCurrentMonth",
+export const statisticCurrentMonthOfWeekAtom = atom({
+  key: "statisticCurrentMonthOfWeek",
   default: new Date(),
 });
 
-export const statisticCurrentWeekAtom = atom({
-  key: "statisticCurrentWeek",
+export const statisticCurrentMonthOfDayAtom = atom({
+  key: "statisticCurrentMonthOfDay",
   default: new Date(),
 });
 
 export const ststusSelectedDateAtom = atom({
   key: "statusSelectedDate",
   default: new Date(),
+});
+
+export const monthOfDayWorkingHoursAtom = atom({
+  key: "monthOfDayWorkingHours",
+  default: [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0,
+  ],
 });

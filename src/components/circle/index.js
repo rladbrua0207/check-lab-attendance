@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { globalTheme } from "../../GlobalTheme";
 
 const CircleContainer = styled.svg`
@@ -23,9 +23,46 @@ const Path = styled.path`
   fill: none;
   stroke-width: 2.8;
   stroke-linecap: round;
-  animation: progress 1s ease-out forwards;
+  /* animation: progress 3s ease-out forwards;
+  -webkit-animation: progress 3s ease-out forwards;
+  -moz-animation: progress 3s ease-out forwards;
+  -ms-animation: progress 3s ease-out forwards;
+  -o-animation: progress 3s ease-out forwards; */
+  stroke-dasharray: ${(props) => props.progress} 100;
 
   @keyframes progress {
+    0% {
+      stroke-dasharray: 0 100;
+    }
+    100% {
+      stroke-dasharray: ${(props) => props.progress} 100;
+    }
+  }
+  @-webkit-keyframes progress {
+    0% {
+      stroke-dasharray: 0 100;
+    }
+    100% {
+      stroke-dasharray: ${(props) => props.progress} 100;
+    }
+  }
+  @-moz-keyframes progress {
+    0% {
+      stroke-dasharray: 0 100;
+    }
+    100% {
+      stroke-dasharray: ${(props) => props.progress} 100;
+    }
+  }
+  @-ms-keyframes progress {
+    0% {
+      stroke-dasharray: 0 100;
+    }
+    100% {
+      stroke-dasharray: ${(props) => props.progress} 100;
+    }
+  }
+  @-o-keyframes progress {
     0% {
       stroke-dasharray: 0 100;
     }
@@ -37,6 +74,7 @@ const Path = styled.path`
 
 // 사용자가 일을 한 만큼 date마다의 원을 채워주기 위한 component
 function Circle({ progress }) {
+  // console.log(progress);
   return (
     <CircleContainer viewBox={"0 0 36 36"}>
       <Path
