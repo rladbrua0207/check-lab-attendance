@@ -4,6 +4,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { axiosGet } from "../api";
 import {
+  avgCheckedInAtom,
+  avgCheckedOutAtom,
   statisticCurrentMonthOfDayAtom,
   statisticCurrentMonthOfWeekAtom,
   statisticCurrentYearOfMonthAtom,
@@ -62,34 +64,24 @@ function StatisticPage() {
   const [statisticCurrentMonthOfDay, setStatisticCurrentMonthOfDay] =
     useRecoilState(statisticCurrentMonthOfDayAtom);
 
+  const [avgCheckedIn, setAvgCheckedIn] = useRecoilState(avgCheckedInAtom);
+  const [avgCheckedOut, setAvgCheckedOut] = useRecoilState(avgCheckedOutAtom);
+
   const [workingHoursArr, setWorkingHoursArr] = useState([]);
 
-  const axiosGetWorkingHours = async () => {
+  const handleArrayAvgCalculate = (array) => {
+    let sum = 0;
+    const length = array.length;
+
+    array.forEach((element) => {
+      sum += element;
+    });
+
+    return sum / length;
+  };
+
+  const axiosGetWorkingHours = async (startDate, endDate) => {
     const sendData = { id: localStorage.getItem("id") };
-
-    const startDate =
-      selectedDateMenu === "month"
-        ? format(statisticCurrentYearOfMonth, "yy") + "01"
-        : selectedDateMenu === "week"
-        ? format(statisticCurrentMonthOfWeek, "yy") +
-          format(statisticCurrentMonthOfWeek, "MM") +
-          "01"
-        : format(statisticCurrentMonthOfDay, "yy") +
-          format(statisticCurrentMonthOfDay, "MM") +
-          "01";
-
-    const endDate =
-      selectedDateMenu === "month"
-        ? format(statisticCurrentYearOfMonth, "yy") + "12"
-        : selectedDateMenu === "week"
-        ? format(statisticCurrentMonthOfWeek, "yy") +
-          format(statisticCurrentMonthOfWeek, "MM") +
-          "31"
-        : format(statisticCurrentMonthOfDay, "yy") +
-          format(statisticCurrentMonthOfDay, "MM") +
-          "31";
-
-    // workingHoursYear도 필요함.
     const response = await axiosGet(
       selectedDateMenu === "month"
         ? "workingHoursMonthTermDate"
@@ -101,11 +93,65 @@ function StatisticPage() {
       endDate
     );
     setWorkingHoursArr(response.hours);
-    console.log(response.hours);
+  };
+  const axiosGetAvgCheckedIn = async (startDate, endDate) => {
+    const sendData = { id: localStorage.getItem("id") };
+    const response = await axiosGet(
+      "checkinsTermDate",
+      sendData,
+      startDate,
+      endDate
+    );
+    console.log(response);
+
+    // Todo
+    // setAvgCheckedIn(handleArrayAvgCalculate(array))
+  };
+
+  const axiosGetAvgCheckedOut = async (startDate, endDate) => {
+    const sendData = { id: localStorage.getItem("id") };
+    const response = await axiosGet(
+      "checkoutsTermDate",
+      sendData,
+      startDate,
+      endDate
+    );
+    console.log(response);
+
+    // Todo
+    // setAvgCheckedOut(handleArrayAvgCalculate(array))
   };
 
   useEffect(() => {
-    axiosGetWorkingHours();
+    let startDate;
+    let endDate;
+
+    if (selectedDateMenu === "month") {
+      startDate = format(statisticCurrentYearOfMonth, "yy") + "01";
+      endDate = format(statisticCurrentYearOfMonth, "yy") + "12";
+    } else if (selectedDateMenu === "week") {
+      startDate =
+        format(statisticCurrentMonthOfWeek, "yy") +
+        format(statisticCurrentMonthOfWeek, "MM") +
+        "01";
+      endDate =
+        format(statisticCurrentMonthOfWeek, "yy") +
+        format(statisticCurrentMonthOfWeek, "MM") +
+        "31";
+    } else {
+      startDate =
+        format(statisticCurrentMonthOfDay, "yy") +
+        format(statisticCurrentMonthOfDay, "MM") +
+        "01";
+      endDate =
+        format(statisticCurrentMonthOfWeek, "yy") +
+        format(statisticCurrentMonthOfWeek, "MM") +
+        "31";
+    }
+
+    axiosGetWorkingHours(startDate, endDate);
+    axiosGetAvgCheckedIn(startDate, endDate);
+    axiosGetAvgCheckedOut(startDate, endDate);
   }, [
     statisticCurrentYearOfMonth,
     statisticCurrentMonthOfWeek,

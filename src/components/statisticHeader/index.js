@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled, { keyframes } from "styled-components";
-import { statisticSelectedDateMenuAtom } from "../../atom";
+import { axiosGet } from "../../api";
+import {
+  avgCheckedInAtom,
+  avgCheckedOutAtom,
+  statisticSelectedDateMenuAtom,
+} from "../../atom";
 import { globalTheme } from "../../GlobalTheme";
 
 const StatisticHeaderContainer = styled.div`
@@ -99,17 +104,17 @@ const DateUnitMenuBar = styled.div`
   background-color: white;
   align-items: center;
   z-index: 1;
-  animation: ${({ isOpenMenuBar }) => (isOpenMenuBar ? fadeOut : fadeIn)} 1s
+  animation: ${({ isOpenMenuBar }) => (isOpenMenuBar ? fadeOut : fadeIn)} 0.5s
     ease-out forwards;
-  transition: visibility 1s linear;
+  transition: visibility 0.5s linear;
 
   .week {
     animation: ${({ isOpenMenuBar }) => (isOpenMenuBar ? fadeOut : weekFadeIn)}
-      1s linear forwards;
+      0.5s linear forwards;
   }
   .day {
     animation: ${({ isOpenMenuBar }) => (isOpenMenuBar ? fadeOut : dayFadeIn)}
-      1s linear forwards;
+      0.5s linear forwards;
   }
 `;
 
@@ -132,6 +137,8 @@ function StatisticHeader() {
     statisticSelectedDateMenuAtom
   );
   const [isOpenMenuBar, setIsOpenMenuBar] = useState(false);
+  const [avgCheckedIn, setAvgCheckedIn] = useRecoilState(avgCheckedInAtom);
+  const [avgCheckedOut, setAvgCheckedOut] = useRecoilState(avgCheckedOutAtom);
 
   const openDateMenu = () => {
     setIsOpenMenuBar(true);
@@ -165,11 +172,15 @@ function StatisticHeader() {
 
       <CheckAverageInOutContainer>
         <CheckAverageInBox>
-          <CheckAverageIn>07 : 10</CheckAverageIn>
+          <CheckAverageIn>
+            {avgCheckedIn.getHours()} : {avgCheckedIn.getMinutes()}
+          </CheckAverageIn>
           <div>avg in</div>
         </CheckAverageInBox>
         <CheckAverageOutBox>
-          <CheckAverageOut>17 : 50</CheckAverageOut>
+          <CheckAverageOut>
+            {avgCheckedIn.getHours()} : {avgCheckedIn.getMinutes()}
+          </CheckAverageOut>
           <div>avg out</div>
         </CheckAverageOutBox>
       </CheckAverageInOutContainer>

@@ -66,7 +66,6 @@ function NavBar() {
   }, [location.pathname]);
 
   const moveTargetPage = (arg) => {
-    console.log(arg);
     setClickedNav(arg);
     navigate(page[arg]);
   };

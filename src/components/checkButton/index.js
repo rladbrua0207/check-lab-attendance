@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { axiosGet, axiosPost } from "../../api";
+import { isLocationInAtom } from "../../atom";
 import { globalTheme } from "../../GlobalTheme";
 
 const CheckButtonContainer = styled.div`
@@ -23,12 +25,12 @@ const CheckButtonBox = styled.div`
 
 // 춠석체크를 위한 component
 function CheckButton() {
+  const [isLocationIn, setIsLocationIn] = useRecoilState(isLocationInAtom);
   const [isChecked, setIsChecked] = useState(false);
 
   const axiosGetIsCurrentCheck = async () => {
     const sendData = { id: localStorage.getItem("id") };
     const responseData = await axiosGet("status", sendData);
-    console.log(responseData);
 
     responseData.status === "q" ? setIsChecked(false) : setIsChecked(true);
   };
@@ -38,6 +40,10 @@ function CheckButton() {
   }, []);
 
   const handleAttendancecheck = async () => {
+    if (isLocationIn === false) {
+      alert("err: out of range");
+      return;
+    }
     let responseData;
     const sendData = { id: localStorage.getItem("id") };
 
@@ -49,7 +55,6 @@ function CheckButton() {
       if (responseData.errcode === 0) setIsChecked(true);
     }
 
-    console.log(responseData);
   };
 
   return (

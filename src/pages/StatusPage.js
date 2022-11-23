@@ -30,8 +30,8 @@ const TimeGaugeBox = styled.div`
 `;
 
 const GaugeIndex = styled.div`
-  margin: 0 0 1vh 5vw;
-  width: 10vw;
+  margin: 1vh 0 1vh 5vw;
+  width: 70vw;
   font-size: 1.3rem;
 `;
 
@@ -55,7 +55,6 @@ function StatusPage() {
       sendData,
       format(selectedDate, "yyMMdd")
     );
-    console.log(response);
 
     const objArr = [];
     const keys = Object.keys(response.hours);

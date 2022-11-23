@@ -99,8 +99,6 @@ function Calendar() {
     const monthEndDate = format(endOfMonth(currentMonth), "yyMMdd");
 
     const sendData = { id: localStorage.getItem("id") };
-    console.log(monthStartDate);
-    console.log(monthEndDate);
 
     const response = await axiosGet(
       "workingHoursDayTermDate",
@@ -108,13 +106,11 @@ function Calendar() {
       monthStartDate,
       monthEndDate
     );
-    console.log(response);
     setMonthOfDayWorkingHoursArr(response.hours);
   };
 
   useEffect(() => {
     axiosGetWorkingHoursDayTermDate();
-    console.log(monthOfDayWorkingHoursArr);
   }, [currentMonth]);
 
   const prevMonth = () => {
@@ -124,7 +120,6 @@ function Calendar() {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
   const onDateClick = (day) => {
-    console.log(day);
     setSelectedDate(day);
   };
   return (
@@ -198,7 +193,6 @@ const RenderCells = ({
     for (let i = 0; i < 7; i++) {
       formattedDate = format(day, "d");
       const cloneDay = day;
-      console.log(format(day, "d"));
       // console.log(
       //   monthOfDayWorkingHoursArr !== undefined
       //     ? (monthOfDayWorkingHoursArr[Number(formattedDate - 1)] / 8) * 100

@@ -5,9 +5,9 @@ export const calendarSelectedDateAtom = atom({
   default: new Date(),
 });
 
-export const userLocationAtom = atom({
-  key: "userLocation",
-  default: { lat: 0, lon: 0 },
+export const isLocationInAtom = atom({
+  key: "isLocationIn",
+  default: false,
 });
 
 export const isLoginAtom = atom({
@@ -46,4 +46,14 @@ export const monthOfDayWorkingHoursAtom = atom({
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0,
   ],
+});
+
+export const avgCheckedInAtom = atom({
+  key: "avgCheckedIn",
+  default: new Date(),
+});
+
+export const avgCheckedOutAtom = atom({
+  key: "avgCheckedOut",
+  default: new Date(),
 });

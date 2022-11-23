@@ -19,7 +19,8 @@ const CircleContainer = styled.svg`
 `;
 
 const Path = styled.path`
-  stroke: #4cc790;
+  stroke: ${(val) =>
+    val.progress >= 100 ? globalTheme.greencolor : globalTheme.blueColor};
   fill: none;
   stroke-width: 2.8;
   stroke-linecap: round;
@@ -30,15 +31,15 @@ const Path = styled.path`
   -o-animation: progress 3s ease-out forwards; */
   stroke-dasharray: ${(props) => props.progress} 100;
 
-  @keyframes progress {
+  /* @keyframes progress {
     0% {
       stroke-dasharray: 0 100;
     }
     100% {
       stroke-dasharray: ${(props) => props.progress} 100;
     }
-  }
-  @-webkit-keyframes progress {
+  } */
+  /* @-webkit-keyframes progress {
     0% {
       stroke-dasharray: 0 100;
     }
@@ -69,7 +70,7 @@ const Path = styled.path`
     100% {
       stroke-dasharray: ${(props) => props.progress} 100;
     }
-  }
+  } */
 `;
 
 // 사용자가 일을 한 만큼 date마다의 원을 채워주기 위한 component

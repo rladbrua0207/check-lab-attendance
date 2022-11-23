@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { globalTheme } from "../../GlobalTheme";
 
 const HeaderContainer = styled.div`
   width: 90%;
@@ -18,15 +19,16 @@ const Indicator = styled.div`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: tomato;
+  background-color: ${(val) =>
+    val.isLocationIn ? globalTheme.blueColor : globalTheme.redColor};
 `;
 
 // header component
-function Header() {
+function Header({ isLocationIn }) {
   return (
     <HeaderContainer>
       <HeaderTitle>출석체크</HeaderTitle>
-      <Indicator>{/** Todo 동적으로 색 바뀌도록 */}</Indicator>
+      <Indicator isLocationIn={isLocationIn}></Indicator>
     </HeaderContainer>
   );
 }

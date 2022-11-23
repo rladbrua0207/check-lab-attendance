@@ -55,7 +55,6 @@ function Login() {
   const handleLogin = async () => {
     const hData = await axiosGet("hashcode");
     localStorage.setItem("id", hData.hashcode);
-    console.log(localStorage.getItem("id"));
     const sendData = { id: localStorage.getItem("id"), name: username };
     const uData = await axiosPut("user", sendData, null, null);
     setIsLogin(true);
