@@ -34,16 +34,13 @@ function CheckButton() {
   const axiosGetIsCurrentCheck = async () => {
     const sendData = { id: localStorage.getItem("id") };
     const responseData = await axiosGet("status", sendData);
-    responseData.status === "q" ? setIsChecked(false) : setIsChecked(true);
+    console.log(responseData);
+    if (responseData.errcode === 0) {
+      responseData.status === "q" ? setIsChecked(false) : setIsChecked(true);
+    }
   };
 
   const clickModalOutSide = (e) => {
-    console.dir(e);
-    console.log(e.target);
-    console.log(modalOverlay.current);
-    console.log(e.target.id);
-    console.log(isOpenOutOfRangeErrModal);
-    console.log(e.target.id);
     if (isOpenOutOfRangeErrModal && e.target.id !== "outOfRangeErrModal") {
       console.log(1);
       setIsOpenOutOfRangeErrModal(false);
@@ -69,12 +66,15 @@ function CheckButton() {
 
     if (isChecked) {
       responseData = await axiosPost("checkout", sendData);
+      console.log(responseData);
       if (responseData.errcode === 0) setIsChecked(false);
     } else {
       responseData = await axiosPost("checkin", sendData);
+      console.log(responseData);
       if (responseData.errcode === 0) setIsChecked(true);
     }
   };
+  console.log(isChecked);
 
   return (
     <CheckButtonContainer>

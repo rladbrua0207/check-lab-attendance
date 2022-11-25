@@ -8,14 +8,22 @@ import CalendarPage from "./pages/CalendarPage";
 import StatisticPage from "./pages/StatisticPage";
 import StatusPage from "./pages/StatusPage";
 import { useRecoilState } from "recoil";
-import { isLocationInAtom, isLoginAtom, userLocationAtom } from "./atom";
+import { isLocationInAtom, isLoginAtom } from "./atom";
 import MobileDetect from "mobile-detect";
 import ReactModal from "react-modal";
 
 const MainContainer = styled.div`
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   overflow: hidden;
 `;
+
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty("--vh", `${vh}px`);
+window.addEventListener("resize", () => {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+});
 
 function getDistance(lat1, lon1, lat2, lon2) {
   if (lat1 === lat2 && lon1 === lon2) return 0;
@@ -54,6 +62,8 @@ function Router() {
       //연구실 위도(세로): 36.366578, 경도(가로): 127.344316
       let lat = pos.coords.latitude;
       let lon = pos.coords.longitude;
+      console.log(lat);
+      console.log(lon);
       // Todo 위치 안에있을경우 isLocationIn true;
       // console.log(lat >= minLat - 100000);
       // console.log(lat <= maxLat + 100000);
