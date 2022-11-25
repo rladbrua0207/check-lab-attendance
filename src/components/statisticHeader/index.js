@@ -10,7 +10,7 @@ import {
 import { globalTheme } from "../../GlobalTheme";
 
 const StatisticHeaderContainer = styled.div`
-  height: 5vh;
+  height: 5%;
   display: flex;
   justify-content: space-between;
   padding-inline: 5vw;
@@ -96,7 +96,7 @@ const dayFadeIn = keyframes`
 const DateUnitMenuBar = styled.div`
   position: absolute;
   width: 90vw;
-  height: 5vh;
+  height: 5%;
   border-radius: 100px;
   display: flex;
   visibility: ${({ isOpenMenuBar }) => (isOpenMenuBar ? "visible" : "hidden")};

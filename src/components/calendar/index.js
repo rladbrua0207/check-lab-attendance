@@ -23,7 +23,7 @@ const CalendarContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
-  height: 53vh;
+  height: 55%;
   padding: 2%;
 `;
 

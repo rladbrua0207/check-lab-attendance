@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 
 const LoginContainer = styled.div`
   width: 95vw;
-  height: 25vh;
+  height: 25%;
   border: solid 1px ${globalTheme.blueColor};
   border-radius: 20px;
   position: absolute;
@@ -30,13 +30,13 @@ const LoginTitle = styled.div`
 const LoginInput = styled.input`
   font-size: inherit;
   width: 70vw;
-  height: 4vh;
+  height: 18%;
   border: solid 1px ${globalTheme.blueColor};
   border-radius: 5px;
 `;
 
 const LoginButton = styled.div`
-  margin-top: 3vh;
+  margin-top: 8%;
 `;
 
 // login component

@@ -8,8 +8,8 @@ import { isLocationInAtom } from "../../atom";
 import { globalTheme } from "../../GlobalTheme";
 
 const CheckButtonContainer = styled.div`
-  margin-top: 4vh;
-  height: 5vh;
+  margin-top: 3%;
+  height: 5%;
   align-items: center;
 `;
 

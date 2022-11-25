@@ -7,9 +7,9 @@ import { string } from "../../utils/constants";
 const NavBarContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 8vh;
+  height: 8%;
   font-size: 20px;
-  margin-bottom: 3vh;
+  margin-bottom: 6%;
 
   .selectedNav {
     border-bottom: solid 2px ${globalTheme.blueColor};

@@ -17,11 +17,12 @@ import TimeGauge from "../components/timeGauge";
 import { globalTheme } from "../GlobalTheme";
 
 const StatisticContents = styled.div`
+  position: relative;
   margin: 0 auto;
   margin-top: 3vh;
   border: solid 1px ${globalTheme.blueColor};
   width: 95vw;
-  max-height: 65vh;
+  max-height: 65%;
   border-radius: 20px;
   overflow: auto;
 `;
@@ -41,7 +42,7 @@ const GaugeIndex = styled.div`
 
 const StatisticContentsContainer = styled.div`
   position: relative;
-  height: 73vh;
+  height: 73%;
 `;
 
 const StatisticContentsBox = styled.div`
