@@ -23,7 +23,8 @@ const CalendarContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
-  height: 55%;
+  height: 53vh;
+  height: calc(var(--vh, 1vh) * 53);
   padding: 2%;
 `;
 
@@ -67,7 +68,7 @@ const CalendarDaysBox = styled.div`
     border-radius: 1000px;
   }
 
-  width: 8%;
+  width: 2.9vh;
   text-align: center;
   display: flex;
   flex-direction: column;

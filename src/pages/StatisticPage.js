@@ -22,7 +22,9 @@ const StatisticContents = styled.div`
   margin-top: 3vh;
   border: solid 1px ${globalTheme.blueColor};
   width: 95vw;
-  max-height: 65%;
+  max-height: 65vh;
+  max-height: calc(var(--vh, 1vh) * 65);
+
   border-radius: 20px;
   overflow: auto;
 `;
@@ -42,7 +44,8 @@ const GaugeIndex = styled.div`
 
 const StatisticContentsContainer = styled.div`
   position: relative;
-  height: 73%;
+  height: 73vh;
+  height: calc(var(--vh, 1vh) * 73);
 `;
 
 const StatisticContentsBox = styled.div`

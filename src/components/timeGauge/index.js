@@ -8,6 +8,7 @@ const TimeGaugeContainer = styled.div`
   margin-top: ${(props) => props.marginTop}vh;
   width: 75vw;
   height: 4vh;
+  height: calc(var(--vh, 1vh) * 4);
   border: 1px solid ${globalTheme.blueColor};
   border-radius: 10vh;
   overflow: hidden;

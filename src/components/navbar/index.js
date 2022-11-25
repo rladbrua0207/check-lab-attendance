@@ -7,9 +7,11 @@ import { string } from "../../utils/constants";
 const NavBarContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 8%;
+  height: 8vh;
+  height: calc(var(--vh, 1vh) * 8);
+
   font-size: 20px;
-  margin-bottom: 6%;
+  margin-bottom: 3vh;
 
   .selectedNav {
     border-bottom: solid 2px ${globalTheme.blueColor};
