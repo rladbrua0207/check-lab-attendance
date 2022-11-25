@@ -53,7 +53,9 @@ function Router() {
   var md = new MobileDetect(navigator.userAgent);
 
   const getIsLocationIn = () => {
+    console.log("밖");
     navigator.geolocation.getCurrentPosition((pos) => {
+      console.log("안");
       const maxLat = 127.3454;
       const minLat = 127.3432;
       const minLon = 36.3655;
