@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
 import { ststusSelectedDateAtom } from "../../atom";
+import { months } from "../../utils/constants";
 
 const CalendarContainer = styled.div`
   margin: 0 auto;
@@ -117,7 +118,10 @@ const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
         <FontAwesomeIcon icon={faChevronLeft} />
       </div>
       <SelectedMonth>
-        {format(currentMonth, "yyyy")}년 {format(currentMonth, "M")}월
+        {`${months[format(currentMonth, "M")]}, ${format(
+          currentMonth,
+          "yyyy"
+        )}`}
       </SelectedMonth>
       <div onClick={nextMonth}>
         <FontAwesomeIcon icon={faChevronRight} />
@@ -170,9 +174,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
               : "valid"
           }`}
           key={day}
-          onClick={
-            () => onDateClick(cloneDay)
-          }
+          onClick={() => onDateClick(cloneDay)}
         >
           <CalendarDays
             className={

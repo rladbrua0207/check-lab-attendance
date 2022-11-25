@@ -22,7 +22,7 @@ const Path = styled.path`
   stroke: ${(val) =>
     val.progress >= 100 ? globalTheme.greencolor : globalTheme.blueColor};
   fill: none;
-  stroke-width: 2.8;
+  stroke-width: 4;
   stroke-linecap: round;
   /* animation: progress 3s ease-out forwards;
   -webkit-animation: progress 3s ease-out forwards;
@@ -78,13 +78,17 @@ function Circle({ progress }) {
   // console.log(progress);
   return (
     <CircleContainer viewBox={"0 0 36 36"}>
-      <Path
-        stroke-dasharray={"60, 100"}
-        progress={progress}
-        d={
-          "M18 2.0845 a 15.9155 15.9155 1 0 0 0 31.831 a 15.9155 15.9155 1 0 0 0 -31.831"
-        }
-      ></Path>
+      {progress !== 0 ? (
+        <Path
+          stroke-dasharray={"60, 100"}
+          progress={progress}
+          d={
+            "M18 2.0845 a 15.9155 15.9155 1 0 0 0 31.831 a 15.9155 15.9155 1 0 0 0 -31.831"
+          }
+        ></Path>
+      ) : (
+        <></>
+      )}
     </CircleContainer>
   );
 }

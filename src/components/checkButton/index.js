@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import ReactModal from "react-modal";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { axiosGet, axiosPost } from "../../api";
@@ -27,21 +28,40 @@ const CheckButtonBox = styled.div`
 function CheckButton() {
   const [isLocationIn, setIsLocationIn] = useRecoilState(isLocationInAtom);
   const [isChecked, setIsChecked] = useState(false);
-
+  const [isOpenOutOfRangeErrModal, setIsOpenOutOfRangeErrModal] =
+    useState(false);
+  const modalOverlay = useRef();
   const axiosGetIsCurrentCheck = async () => {
     const sendData = { id: localStorage.getItem("id") };
     const responseData = await axiosGet("status", sendData);
-
     responseData.status === "q" ? setIsChecked(false) : setIsChecked(true);
+  };
+
+  const clickModalOutSide = (e) => {
+    console.dir(e);
+    console.log(e.target);
+    console.log(modalOverlay.current);
+    console.log(e.target.id);
+    console.log(isOpenOutOfRangeErrModal);
+    console.log(e.target.id);
+    if (isOpenOutOfRangeErrModal && e.target.id !== "outOfRangeErrModal") {
+      console.log(1);
+      setIsOpenOutOfRangeErrModal(false);
+    }
   };
 
   useEffect(() => {
     axiosGetIsCurrentCheck();
-  }, []);
+
+    document.addEventListener("mousedown", clickModalOutSide);
+    return () => {
+      document.removeEventListener("mousedown", clickModalOutSide);
+    };
+  }, [isOpenOutOfRangeErrModal]);
 
   const handleAttendancecheck = async () => {
     if (isLocationIn === false) {
-      alert("err: out of range");
+      setIsOpenOutOfRangeErrModal(true);
       return;
     }
     let responseData;
@@ -54,13 +74,36 @@ function CheckButton() {
       responseData = await axiosPost("checkin", sendData);
       if (responseData.errcode === 0) setIsChecked(true);
     }
-
   };
 
   return (
     <CheckButtonContainer>
+      <ReactModal
+        id="outOfRangeErrModal"
+        isOpen={isOpenOutOfRangeErrModal}
+        ariaHideApp={false}
+        style={{
+          overlay: {
+            position: "fixed",
+            alignItems: "center",
+          },
+          content: {
+            fontSize: "22px",
+            width: "70%",
+            height: "20%",
+            borderRadius: "15px",
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            lineHeight: "150%",
+          },
+        }}
+      >
+        Your location is outside the area, Go into the area and try.
+      </ReactModal>
       <CheckButtonBox onClick={handleAttendancecheck}>
-        {isChecked ? "퇴근하기" : "출석하기"}
+        {isChecked ? "check out" : "check in"}
       </CheckButtonBox>
     </CheckButtonContainer>
   );

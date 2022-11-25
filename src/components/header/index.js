@@ -27,7 +27,7 @@ const Indicator = styled.div`
 function Header({ isLocationIn }) {
   return (
     <HeaderContainer>
-      <HeaderTitle>출석체크</HeaderTitle>
+      <HeaderTitle>DIP-lab Check</HeaderTitle>
       <Indicator isLocationIn={isLocationIn}></Indicator>
     </HeaderContainer>
   );

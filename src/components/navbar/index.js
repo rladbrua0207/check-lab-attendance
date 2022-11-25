@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { globalTheme } from "../../GlobalTheme";
+import { string } from "../../utils/constants";
 
 const NavBarContainer = styled.div`
   display: flex;
   width: 100%;
   height: 8vh;
-  font-size: 24px;
+  font-size: 20px;
   margin-bottom: 3vh;
 
   .selectedNav {
@@ -76,19 +77,19 @@ function NavBar() {
         className={clickedNav === "calendar" ? "selectedNav" : ""}
         onClick={() => moveTargetPage("calendar")}
       >
-        달력
+        {string.calendar}
       </CalendarNavBox>
       <StatisticNavBox
         className={clickedNav === "statistic" ? "selectedNav" : ""}
         onClick={() => moveTargetPage("statistic")}
       >
-        통계
+        {string.statistic}
       </StatisticNavBox>
       <StatusNavBox
         className={clickedNav === "status" ? "selectedNav" : ""}
         onClick={() => moveTargetPage("status")}
       >
-        현황
+        {string.status}
       </StatusNavBox>
     </NavBarContainer>
   );

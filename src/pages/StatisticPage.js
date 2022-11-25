@@ -82,6 +82,8 @@ function StatisticPage() {
 
   const axiosGetWorkingHours = async (startDate, endDate) => {
     const sendData = { id: localStorage.getItem("id") };
+    console.log(startDate);
+    console.log(endDate);
     const response = await axiosGet(
       selectedDateMenu === "month"
         ? "workingHoursMonthTermDate"
@@ -92,9 +94,13 @@ function StatisticPage() {
       startDate,
       endDate
     );
+    console.log(response.hours);
     setWorkingHoursArr(response.hours);
   };
+
   const axiosGetAvgCheckedIn = async (startDate, endDate) => {
+    startDate = startDate.length === 4 ? startDate + "01" : startDate;
+    endDate = endDate.length === 4 ? endDate + "31" : endDate;
     const sendData = { id: localStorage.getItem("id") };
     const response = await axiosGet(
       "checkinsTermDate",
@@ -105,11 +111,20 @@ function StatisticPage() {
     console.log(response);
 
     // Todo
-    // setAvgCheckedIn(handleArrayAvgCalculate(array))
+    if (response.errcode === 0) {
+      setAvgCheckedIn(new Date(handleArrayAvgCalculate(response.timestamp)));
+    } else if (response.errcode === 4) {
+      setAvgCheckedIn(new Date("0000/01/01 00:00:00"));
+      console.log(response.errorMessage);
+    }
   };
 
   const axiosGetAvgCheckedOut = async (startDate, endDate) => {
     const sendData = { id: localStorage.getItem("id") };
+    console.log(startDate);
+    console.log(endDate);
+    startDate = startDate.length === 4 ? startDate + "01" : startDate;
+    endDate = endDate.length === 4 ? endDate + "31" : endDate;
     const response = await axiosGet(
       "checkoutsTermDate",
       sendData,
@@ -119,7 +134,12 @@ function StatisticPage() {
     console.log(response);
 
     // Todo
-    // setAvgCheckedOut(handleArrayAvgCalculate(array))
+    if (response.errcode === 0) {
+      setAvgCheckedOut(new Date(handleArrayAvgCalculate(response.timestamp)));
+    } else if (response.errcode === 4) {
+      setAvgCheckedOut(new Date("0000/01/01 00:00:00"));
+      console.log(response.errorMessage);
+    }
   };
 
   useEffect(() => {
@@ -137,16 +157,24 @@ function StatisticPage() {
       endDate =
         format(statisticCurrentMonthOfWeek, "yy") +
         format(statisticCurrentMonthOfWeek, "MM") +
-        "31";
+        new Date(
+          statisticCurrentMonthOfWeek.getFullYear(),
+          statisticCurrentMonthOfWeek.getMonth() + 1,
+          0
+        ).getDate();
     } else {
       startDate =
         format(statisticCurrentMonthOfDay, "yy") +
         format(statisticCurrentMonthOfDay, "MM") +
         "01";
       endDate =
-        format(statisticCurrentMonthOfWeek, "yy") +
-        format(statisticCurrentMonthOfWeek, "MM") +
-        "31";
+        format(statisticCurrentMonthOfDay, "yy") +
+        format(statisticCurrentMonthOfDay, "MM") +
+        new Date(
+          statisticCurrentMonthOfDay.getFullYear(),
+          statisticCurrentMonthOfDay.getMonth() + 1,
+          0
+        ).getDate();
     }
 
     axiosGetWorkingHours(startDate, endDate);
@@ -181,4 +209,5 @@ function StatisticPage() {
     </>
   );
 }
+
 export default StatisticPage;

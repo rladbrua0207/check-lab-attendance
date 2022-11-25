@@ -20,6 +20,7 @@ import {
   statisticCurrentMonthOfWeekAtom,
   statisticCurrentYearOfMonthAtom,
 } from "../../atom";
+import { months } from "../../utils/constants";
 
 const StatisticFooterContainer = styled.div`
   display: flex;
@@ -56,9 +57,7 @@ const StatisticYearOfMonthFooter = () => {
       <div onClick={prevYear}>
         <FontAwesomeIcon icon={faChevronLeft} />
       </div>
-      <SelectedDate>
-        {format(statisticCurrentYearOfMonth, "yyyy")}년
-      </SelectedDate>
+      <SelectedDate>{format(statisticCurrentYearOfMonth, "yyyy")}</SelectedDate>
       <div onClick={nextYear}>
         <FontAwesomeIcon icon={faChevronRight} />
       </div>
@@ -83,11 +82,10 @@ const StatisticMonthOfWeekFooter = () => {
         <FontAwesomeIcon icon={faChevronLeft} />
       </div>
       <SelectedDate>
-        {`${format(statisticCurrentMonthOfWeek, "yyyy")}년 ${format(
+        {`${months[format(statisticCurrentMonthOfWeek, "M")]}, ${format(
           statisticCurrentMonthOfWeek,
-          "MM"
+          "yyyy"
         )}`}
-        월
       </SelectedDate>
       <div onClick={nextMonth}>
         <FontAwesomeIcon icon={faChevronRight} />
@@ -112,9 +110,10 @@ const StatisticMonthOfDayFooter = () => {
         <FontAwesomeIcon icon={faChevronLeft} />
       </div>
       <SelectedDate>
-        {`${format(statisticCurrentMonthOfDay, "yyyy")}년 ${
-          getMonth(statisticCurrentMonthOfDay) + 1
-        }월`}
+        {`${months[format(statisticCurrentMonthOfDay, "M")]}, ${format(
+          statisticCurrentMonthOfDay,
+          "yyyy"
+        )}`}
       </SelectedDate>
       <div onClick={nextWeek}>
         <FontAwesomeIcon icon={faChevronRight} />

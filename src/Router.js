@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/header";
@@ -9,6 +9,8 @@ import StatisticPage from "./pages/StatisticPage";
 import StatusPage from "./pages/StatusPage";
 import { useRecoilState } from "recoil";
 import { isLocationInAtom, isLoginAtom, userLocationAtom } from "./atom";
+import MobileDetect from "mobile-detect";
+import ReactModal from "react-modal";
 
 const MainContainer = styled.div`
   height: 100vh;
@@ -39,6 +41,8 @@ function getDistance(lat1, lon1, lat2, lon2) {
 function Router() {
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const [isLocationIn, setIsLocationIn] = useRecoilState(isLocationInAtom);
+  let isMobile = /Mobi/i.test(window.navigator.userAgent);
+  var md = new MobileDetect(navigator.userAgent);
 
   const getIsLocationIn = () => {
     navigator.geolocation.getCurrentPosition((pos) => {
@@ -55,12 +59,7 @@ function Router() {
       // console.log(lat <= maxLat + 100000);
       // console.log(lon >= minLon - 100000);
       // console.log(lon <= maxLon + 100000);
-      if (
-        lat >= minLat - 100000 &&
-        lat <= maxLat + 100000 &&
-        lon >= minLon - 100000 &&
-        lon <= maxLon + 100000
-      ) {
+      if (lat >= minLat && lat <= maxLat && lon >= minLon && lon <= maxLon) {
         setIsLocationIn(true);
       } else {
         setIsLocationIn(false);
@@ -72,22 +71,48 @@ function Router() {
     setInterval(() => {
       getIsLocationIn();
     }, 5000);
+    if (!isMobile && md.tablet !== null) {
+    }
   }, []);
 
   return (
     <BrowserRouter>
-      {isLogin ? (
-        <MainContainer>
-          <Header isLocationIn={isLocationIn}></Header>
-          <NavBar></NavBar>
-          <Routes>
-            <Route path="/" element={<CalendarPage />} />
-            <Route path="/statistic" element={<StatisticPage />} />
-            <Route path="/status" element={<StatusPage />} />
-          </Routes>
-        </MainContainer>
+      {isMobile && md.tablet() === null ? (
+        isLogin ? (
+          <MainContainer>
+            <Header isLocationIn={isLocationIn}></Header>
+            <NavBar></NavBar>
+            <Routes>
+              <Route path="/" element={<CalendarPage />} />
+              <Route path="/statistic" element={<StatisticPage />} />
+              <Route path="/status" element={<StatusPage />} />
+            </Routes>
+          </MainContainer>
+        ) : (
+          <Login></Login>
+        )
       ) : (
-        <Login></Login>
+        <ReactModal
+          isOpen={true}
+          ariaHideApp={false}
+          style={{
+            overlay: {
+              position: "fixed",
+              alignItems: "center",
+            },
+            content: {
+              fontSize: "30px",
+              width: "80%",
+              height: "90%",
+              margin: "0 auto",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            },
+          }}
+        >
+          Please enter via mobile.
+        </ReactModal>
       )}
     </BrowserRouter>
   );

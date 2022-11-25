@@ -49,7 +49,10 @@ export const axiosGet = async (urlName, sendData, param1, param2) => {
     console.log(
       `get error \nerror code: ${err.response.data.errcode}, error message: ${err.response.data.err}`
     );
-    return "error";
+    return {
+      errcode: err.response.data.errcode,
+      errorMessage: err.response.data.err,
+    };
   }
 };
 

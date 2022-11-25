@@ -16,6 +16,7 @@ import {
   calendarSelectedDateAtom,
   monthOfDayWorkingHoursAtom,
 } from "../../atom";
+import { months } from "../../utils/constants";
 
 const CalendarContainer = styled.div`
   margin: 0 auto;
@@ -61,11 +62,12 @@ const CalendarDaysBox = styled.div`
   }
 
   &.selected div {
+    position: sticky;
     background-color: lightgray;
     border-radius: 1000px;
   }
 
-  width: 6%;
+  width: 8%;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -147,7 +149,7 @@ const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
         <FontAwesomeIcon icon={faChevronLeft} />
       </div>
       <SelectedMonth>
-        {format(currentMonth, "yyyy")}년 {format(currentMonth, "M")}월
+        {months[format(currentMonth, "M")]}, {format(currentMonth, "yyyy")}
       </SelectedMonth>
       <div onClick={nextMonth}>
         <FontAwesomeIcon icon={faChevronRight} />
@@ -221,7 +223,6 @@ const RenderCells = ({
           >
             {formattedDate}
           </CalendarDays>
-          {/**Todo 동적으로 */}
           <Circle
             progress={
               isSameMonth(day, currentMonth)

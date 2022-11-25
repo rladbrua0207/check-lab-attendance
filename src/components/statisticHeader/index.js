@@ -173,13 +173,15 @@ function StatisticHeader() {
       <CheckAverageInOutContainer>
         <CheckAverageInBox>
           <CheckAverageIn>
-            {avgCheckedIn.getHours()} : {avgCheckedIn.getMinutes()}
+            {avgCheckedIn.getHours().toString().padStart(2, "0")} :{" "}
+            {avgCheckedIn.getMinutes().toString().padStart(2, "0")}
           </CheckAverageIn>
           <div>avg in</div>
         </CheckAverageInBox>
         <CheckAverageOutBox>
           <CheckAverageOut>
-            {avgCheckedIn.getHours()} : {avgCheckedIn.getMinutes()}
+            {avgCheckedOut.getHours().toString().padStart(2, "0")} :{" "}
+            {avgCheckedOut.getMinutes().toString().padStart(2, "0")}
           </CheckAverageOut>
           <div>avg out</div>
         </CheckAverageOutBox>

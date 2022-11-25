@@ -7,6 +7,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { axiosGet } from "../api";
 import { calendarSelectedDateAtom, monthOfDayWorkingHoursAtom } from "../atom";
 import { format } from "date-fns";
+import { months } from "../utils/constants";
 
 const HorizonLine = styled.hr`
   width: 92%;
@@ -44,7 +45,10 @@ function CalendarPage() {
     <>
       <Calendar></Calendar>
       <HorizonLine></HorizonLine>
-      <SelectedDate>{format(selectedDate, "yyyy년 MM월 dd일")}</SelectedDate>
+      <SelectedDate>{`${months[format(selectedDate, "M")]} ${format(
+        selectedDate,
+        "dd"
+      )}, ${format(selectedDate, "yyyy")}`}</SelectedDate>
       <TimeGauge marginTop={0} dayTime={selectedDateWorkingHours}></TimeGauge>
       <CheckButton></CheckButton>
     </>
