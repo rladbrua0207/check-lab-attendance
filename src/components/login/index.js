@@ -59,7 +59,9 @@ function Login() {
   }, []);
 
   const handleLogin = async () => {
+    console.log(1);
     const hData = await axiosGet("hashcode");
+    console.log(hData);
     localStorage.setItem("id", hData.hashcode);
     const sendData = { id: localStorage.getItem("id"), name: username };
     const uData = await axiosPut("user", sendData, null, null);

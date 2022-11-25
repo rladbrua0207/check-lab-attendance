@@ -20,6 +20,7 @@ const CalendarContainer = styled.div`
   width: 90%;
   height: 50%;
   padding: 2%;
+  margin-bottom: 15%;
 `;
 
 const CalendarHeader = styled.div`

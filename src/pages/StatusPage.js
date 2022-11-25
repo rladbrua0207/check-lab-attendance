@@ -18,7 +18,7 @@ const StatusContentContainer = styled.div`
   border-radius: 20px;
   width: 90vw;
   overflow: auto;
-  height: 45%;
+  height: 37%;
 `;
 
 const TimeGaugeBox = styled.div`
