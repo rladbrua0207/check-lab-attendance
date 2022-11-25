@@ -16,7 +16,9 @@ const HorizonLine = styled.hr`
 const SelectedDate = styled.div`
   font-size: 1.2rem;
   text-align: center;
-  margin-top: 3vh;
+  margin-top: 2vh;
+  margin-top: calc(var(--vh, 1vh) * 2);
+
   margin-bottom: 10px;
 `;
 
