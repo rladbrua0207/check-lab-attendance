@@ -11,7 +11,8 @@ const NavBarContainer = styled.div`
   height: calc(var(--vh, 1vh) * 8);
 
   font-size: 20px;
-  margin-bottom: 3vh;
+  margin-bottom: 2vh;
+  margin-bottom: calc(var(--vh, 1vh) * 2);
 
   .selectedNav {
     border-bottom: solid 2px ${globalTheme.blueColor};

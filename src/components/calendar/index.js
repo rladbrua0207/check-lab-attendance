@@ -24,7 +24,7 @@ const CalendarContainer = styled.div`
   flex-direction: column;
   width: 90%;
   height: 53vh;
-  height: calc(var(--vh, 1vh) * 53);
+  height: calc(var(--vh, 1vh) * 58);
   padding: 2%;
 `;
 
@@ -32,7 +32,8 @@ const CalendarHeader = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0% 1% 0% 1%;
-  margin-bottom: 4vh;
+  margin-bottom: 3vh;
+  margin-bottom: calc(var(--vh, 1vh) * 3);
 `;
 
 const CalendarHeaderDaysContainer = styled.div`

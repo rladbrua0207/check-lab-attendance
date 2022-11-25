@@ -4,8 +4,11 @@ import { globalTheme } from "../../GlobalTheme";
 
 const HeaderContainer = styled.div`
   width: 90%;
-  margin: 5%;
+  margin: 0 auto;
   margin-top: 3vh;
+  margin-top: calc(var(--vh, 1vh) * 3);
+  margin-bottom: calc(var(--vh, 1vh) * 1);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
