@@ -27,7 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:https": "HTTPS=true SSL_CRT_FILE=../check_key/168.188.128.32.pem SSL_KEY_FILE=../check_key/168.188.128.32-key.pem react-scripts start"
+    "start:https": "HTTPS=true SSL_CRT_FILE=../check_key/192.168.0.100.pem SSL_KEY_FILE=../check_key/192.168.0.100-key.pem react-scripts start"
   },
   "eslintConfig": {
     "extends": [
