@@ -34,7 +34,7 @@ const LoginInput = styled.input`
   font-size: inherit;
   width: 70vw;
   height: 4vh;
-  height: calc(var(--vh, 1vh) * 3);
+  height: calc(var(--vh, 1vh) * 4);
 
   border: solid 1px ${globalTheme.blueColor};
   border-radius: 5px;
