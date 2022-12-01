@@ -139,3 +139,24 @@ export const axiosDelete = async (urlName, sendData, param1, param2) => {
     return "error";
   }
 };
+
+/**
+ *     const response = await fetch(
+      `${baseUrl}${subUrl(urlName, param1, param2)}?${new URLSearchParams(
+        sendData
+      )}`,
+      {
+        method: "GET", // *GET, POST, PUT, DELETE 등
+        // mode: "cors", // no-cors, *cors, same-origin
+        // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        // credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(data), // body의 데이터 유형은 반드시 "Content-Type" 헤더와 일치해야 함
+      }
+    );
+    const responseData = await response.json();
+    console.log(responseData);
+    return responseData;
+ */

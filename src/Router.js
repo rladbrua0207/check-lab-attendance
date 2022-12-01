@@ -82,9 +82,7 @@ function Router() {
     getIsLocationIn();
     setInterval(() => {
       getIsLocationIn();
-    }, 5000);
-    if (!isMobile && md.tablet !== null) {
-    }
+    }, 10000);
   }, []);
 
   return (
