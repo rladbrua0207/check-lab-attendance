@@ -29,7 +29,7 @@ const subUrl = (urlName, param1, param2) =>
     workingHoursMonthTermDate: `/working_hours/month/${param1}/${param2}`,
   }[urlName]);
 
-const baseUrl = "http://168.188.128.32:55555";//process.env.REACT_APP_API_URL;
+const baseUrl = "https://168.188.128.32:55555";//process.env.REACT_APP_API_URL;
 
 export const axiosGet = async (urlName, sendData, param1, param2) => {
   try {
