@@ -118,7 +118,7 @@ function StatisticPage() {
     if (response.errcode === 0) {
       setAvgCheckedIn(new Date(handleArrayAvgCalculate(response.timestamp)));
     } else if (response.errcode === 4) {
-      setAvgCheckedIn(new Date("0000/01/01 00:00:00"));
+      setAvgCheckedIn(new Date("2000/01/01 00:00:00"));
       console.log(response.errorMessage);
     }
   };
@@ -141,7 +141,7 @@ function StatisticPage() {
     if (response.errcode === 0) {
       setAvgCheckedOut(new Date(handleArrayAvgCalculate(response.timestamp)));
     } else if (response.errcode === 4) {
-      setAvgCheckedOut(new Date("0000/01/01 00:00:00"));
+      setAvgCheckedOut(new Date("2000/01/01 00:00:00"));
       console.log(response.errorMessage);
     }
   };
