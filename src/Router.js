@@ -56,11 +56,11 @@ function Router() {
     console.log("밖");
     navigator.geolocation.getCurrentPosition((pos) => {
       console.log("안");
-      const maxLat = 127.3454;
-      const minLat = 127.3432;
-      const minLon = 36.3655;
-      const maxLon = 36.3675;
-
+      const maxLon = 127.3454;
+      const minLon = 127.3432;
+      const maxLat = 36.3675;
+      const minLat = 36.3655;
+      console.log(getDistance(maxLat, maxLon, minLat, minLon));
       //연구실 위도(세로): 36.366578, 경도(가로): 127.344316
       let lat = pos.coords.latitude;
       let lon = pos.coords.longitude;
@@ -71,12 +71,7 @@ function Router() {
       // console.log(lat <= maxLat + 100000);
       // console.log(lon >= minLon - 100000);
       // console.log(lon <= maxLon + 100000);
-      if (
-        lat >= minLat - 100 &&
-        lat <= maxLat + 100 &&
-        lon >= minLon - 100 &&
-        lon <= maxLon + 100
-      ) {
+      if (lat >= minLat && lat <= maxLat && lon >= minLon && lon <= maxLon) {
         setIsLocationIn(true);
       } else {
         setIsLocationIn(false);
