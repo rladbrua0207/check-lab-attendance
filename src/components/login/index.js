@@ -41,7 +41,7 @@ const LoginInput = styled.input`
   border-radius: 5px;
 `;
 
-const LoginButton = styled.div`
+const LoginButton = styled.button`
   margin-top: 3vh;
   margin-top: calc(var(--vh, 1vh) * 3);
 `;
