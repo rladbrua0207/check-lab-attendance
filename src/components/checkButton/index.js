@@ -88,15 +88,17 @@ function CheckButton() {
         ariaHideApp={false}
         style={{
           overlay: {
+            zIndex: 10,
             position: "fixed",
             alignItems: "center",
           },
           content: {
+            zIndex: 10,
             fontSize: "22px",
             width: "70%",
             height: "20%",
             borderRadius: "15px",
-            margin: "0 auto",
+            margin: "100px auto",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
