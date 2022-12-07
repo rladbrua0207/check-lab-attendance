@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
+import {
+  BrowserRouter,
+  HashRouter,
+  Route,
+  Routes,
+  useParams,
+} from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/header";
 import Login from "./components/login";
@@ -86,7 +92,7 @@ function Router() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       {isMobile && md.tablet() === null ? (
         isLogin ? (
           <MainContainer>
@@ -124,7 +130,7 @@ function Router() {
           Please enter via mobile.
         </ReactModal>
       )}
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
