@@ -93,7 +93,7 @@ function Router() {
             <Header isLocationIn={isLocationIn}></Header>
             <NavBar></NavBar>
             <Routes>
-              <Route path="/" element={<CalendarPage />} />
+              <Route path="/*" element={<CalendarPage />} />
               <Route path="/statistic" element={<StatisticPage />} />
               <Route path="/status" element={<StatusPage />} />
             </Routes>
