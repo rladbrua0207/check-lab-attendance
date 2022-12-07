@@ -4,6 +4,7 @@ import { globalTheme } from "../../GlobalTheme";
 import { axiosGet, axiosPut } from "../../api";
 import { isLoginAtom } from "../../atom";
 import { useRecoilState } from "recoil";
+import ReactModal from "react-modal";
 
 const LoginContainer = styled.div`
   width: 95vw;
@@ -49,7 +50,8 @@ const LoginButton = styled.div`
 function Login() {
   const [username, setUsername] = useState();
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
-
+  const [isOpenAlreadyExistsNameErrModal, setIsOpenAlreadyExistsNameErrModal] =
+    useState(false);
   useEffect(() => {
     if (localStorage.getItem("id")) {
       setIsLogin(true);
@@ -57,6 +59,21 @@ function Login() {
       setIsLogin(false);
     }
   }, []);
+  const clickModalOutSide = (e) => {
+    if (
+      isOpenAlreadyExistsNameErrModal &&
+      e.target.id !== "outOfRangeErrModal"
+    ) {
+      setIsOpenAlreadyExistsNameErrModal(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", clickModalOutSide);
+    return () => {
+      document.removeEventListener("mousedown", clickModalOutSide);
+    };
+  }, [isOpenAlreadyExistsNameErrModal]);
 
   const handleLogin = async () => {
     console.log(1);
@@ -65,11 +82,42 @@ function Login() {
     localStorage.setItem("id", hData.hashcode);
     const sendData = { id: localStorage.getItem("id"), name: username };
     const uData = await axiosPut("user", sendData, null, null);
-    setIsLogin(true);
+    console.log(uData);
+    if (uData === "error") {
+      setIsOpenAlreadyExistsNameErrModal(true);
+      setIsLogin(false);
+      localStorage.removeItem("id");
+    } else {
+      setIsLogin(true);
+    }
   };
   return !isLogin ? (
     <LoginContainer>
-      <LoginTitle>이름을 입력하시오.</LoginTitle>
+      <ReactModal
+        id="alreadyExistsName"
+        isOpen={isOpenAlreadyExistsNameErrModal}
+        ariaHideApp={false}
+        style={{
+          overlay: {
+            position: "fixed",
+            alignItems: "center",
+          },
+          content: {
+            fontSize: "22px",
+            width: "70%",
+            height: "20%",
+            borderRadius: "15px",
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            lineHeight: "150%",
+          },
+        }}
+      >
+        This name already exists Please enter a different name.
+      </ReactModal>
+      <LoginTitle>Please enter a name.</LoginTitle>
       <LoginInput onChange={(e) => setUsername(e.target.value)}></LoginInput>
       <LoginButton onClick={handleLogin}>OK</LoginButton>
     </LoginContainer>

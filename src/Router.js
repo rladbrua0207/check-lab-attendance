@@ -77,7 +77,12 @@ function Router() {
       // console.log(lat <= maxLat + 100000);
       // console.log(lon >= minLon - 100000);
       // console.log(lon <= maxLon + 100000);
-      if (lat >= minLat && lat <= maxLat && lon >= minLon && lon <= maxLon) {
+      if (
+        lat >= minLat - 10 &&
+        lat <= maxLat + 10 &&
+        lon >= minLon - 10 &&
+        lon <= maxLon + 10
+      ) {
         setIsLocationIn(true);
       } else {
         setIsLocationIn(false);
